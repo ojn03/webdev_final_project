@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
+import "./styles/global-styles.css";
+import Home from "./home/homepage";
+import Search from "./search/searchpage";
+import Profile from "./account/profile";
+import Login from "./account/login";
+import Signup from "./account/signup";
+import EditProfile from "./account/edit-profile";
+import Recipe from "./recipe/recipe";
+import NavBarBottom from "./navigation/nav-bottom";
+import NavBarSide from "./navigation/nav-side";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<HashRouter>
+			<div className="">
+        <NavBarSide />
+				<Routes>
+					<Route path="/" element={<Navigate to="home" />} />
+					<Route path="/home" element={<Home />} />
+					<Route path="/search" element={<Search />} />
+					<Route path="/profile" element={<Profile />} />
+					<Route path="/profile/:id" element={<Profile />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
+					<Route path="/profile/edit" element={<EditProfile />} />
+					<Route path="/recipe/:id" element={<Recipe />} />
+				</Routes>
+        <NavBarBottom />
+			</div>
+		</HashRouter>
+	);
 }
 
 export default App;
