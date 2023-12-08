@@ -17,7 +17,7 @@ function NavBar() {
 				<Link
 					key={index}
 					to={`/${link}`}
-					className={`wd-nav-icon min-[600px]:text-3xl max-[600px]:text-2xl m-2 ${pathname.includes(link) && "active"}`}>
+					className={`wd-nav-icon min-[600px]:text-3xl max-[600px]:text-2xl m-2 text-stone-600 ${pathname.includes(link) && "active"}`}>
 					{icons[index]}
 				</Link>
 			))}

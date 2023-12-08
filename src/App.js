@@ -13,9 +13,9 @@ import NavBar from "./navigation/nav-bar";
 function App() {
 	return (
 		<HashRouter>
-			<div className="container flex wrap">
+			<div className="container flex wrap max-w-none">
         <NavBar />
-        <div className="flex p-8">
+        <div className="flex p-8 grow">
 				<Routes>
 					<Route path="/" element={<Navigate to="home" />} />
 					<Route path="/home" element={<Home />} />
