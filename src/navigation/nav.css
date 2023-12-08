@@ -1,0 +1,18 @@
+.wd-nav-icon {
+    color: #181616;
+    margin-bottom: 15px;
+    
+}
+
+.wd-nav-icon.active {
+    color:lightblue;
+    
+    
+}
+
+.wd-nav-bar {
+    /* border-right: 2px solid black; */
+    box-shadow: inset -7px 0 9px -7px rgba(0,0,0,0.4);
+    width: 70px;
+    height: 100vh;
+}
