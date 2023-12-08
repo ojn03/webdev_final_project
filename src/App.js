@@ -8,14 +8,14 @@ import Login from "./account/login";
 import Signup from "./account/signup";
 import EditProfile from "./account/edit-profile";
 import Recipe from "./recipe/recipe";
-import NavBarBottom from "./navigation/nav-bottom";
-import NavBarSide from "./navigation/nav-side";
+import NavBar from "./navigation/nav-bar";
 
 function App() {
 	return (
 		<HashRouter>
-			<div className="">
-        <NavBarSide />
+			<div className="container flex wrap">
+        <NavBar />
+        <div className="flex p-8">
 				<Routes>
 					<Route path="/" element={<Navigate to="home" />} />
 					<Route path="/home" element={<Home />} />
@@ -27,7 +27,7 @@ function App() {
 					<Route path="/profile/edit" element={<EditProfile />} />
 					<Route path="/recipe/:id" element={<Recipe />} />
 				</Routes>
-        <NavBarBottom />
+        </div>
 			</div>
 		</HashRouter>
 	);

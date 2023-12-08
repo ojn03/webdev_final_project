@@ -4,7 +4,9 @@ import "../styles/global-styles.css";
 function Home() {
     
   return (
-    <div></div>
+    <div>
+        <h1 className="text-black">Home</h1>
+    </div>
   );
 }
 export default Home;
