@@ -19,7 +19,6 @@ export const fetchRecipe = async (query) => {
 
     const apiUrl = `${RECIPE_API}?${new URLSearchParams(params)}`;
     console.log(apiUrl)
-    console.log('hell')
     try {
         const response = await axios.get(apiUrl);
         return response.data;

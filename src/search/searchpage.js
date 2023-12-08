@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/global-styles.css";
 import { fetchRecipe } from "./recipe-service";
 import { Button, Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // Make sure to have react-router-dom installed
-
+import RecipePreview from "./recipe_preview";
 
 function Search() {
   const [data, setData] = useState([]);
@@ -38,19 +37,7 @@ function Search() {
       <div className="row">
         {data.hits &&
           data.hits.map((hit, index) => (
-            <div key={index} className="col-md-4 mb-3">
-              <Link
-                to={`/recipe/${hit.recipe.uri}`}
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-                <Card>
-                  <Card.Img variant="top" src={hit.recipe.image} alt={hit.recipe.label} />
-                  <Card.Body>
-                    <Card.Title>{hit.recipe.label}</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Link>
-            </div>
+            <RecipePreview apiResult={hit} />
           ))}
       </div>
     </div>
