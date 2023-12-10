@@ -80,6 +80,7 @@ function Recipe() {
 					</span>
 					
 					{/* if chef, show this: */}
+
 					{/* <span className="wd-inline-stats">
 						<div className="wd-inline-stats">
 							<FaRegHeart />
@@ -98,6 +99,7 @@ function Recipe() {
 						</div>{" "}
 						<p>{dummyEndorsements} endorsements</p>
 					</span> */}
+
 					{/* for both users and chefs: */}
 					<span
 						className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
@@ -112,7 +114,7 @@ function Recipe() {
                 <div className="my-3 mt-6">
                     <h2 className="wd-sub-title text-stone-500">Ingredients</h2>
                     <ul className="list-disc ml-5 mt-3">
-                    {dummyIngredients.map((ingr) => (<li className="pl-1 mb-2">{ingr}</li>))}
+                    {dummyIngredients.map((ingr, ind) => (<li key={ind} className="pl-1 mb-2">{ingr}</li>))}
                     </ul>
                 </div>
 			</div>
