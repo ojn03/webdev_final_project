@@ -1,0 +1,40 @@
+.wd-main {
+	width: calc(100% - 70px);
+	height: 100%;
+	margin-left: 70px;
+	margin-bottom: 0;
+}
+
+.wd-btn {
+    background-color: #e4e4e7;
+    min-width: 50px;
+    min-height: 35px;
+    margin: 5px;
+    padding-left: 10px;
+     padding-right: 10px;
+     border-radius: 2px;
+}
+
+.wd-btn:hover {
+    background-color: #a1a1aa;
+
+}
+
+.wd-btn-success {
+    background-color: #d7e6f7;
+
+}
+
+.wd-btn-success:hover {
+    background-color: #adc4de;
+
+}
+
+@media screen and (max-width: 600px) {
+	.wd-main {
+		width: 100%;
+		height: calc(100% - 50px);
+		margin-left: 0px;
+		margin-bottom: 50px;
+	}
+}
