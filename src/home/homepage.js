@@ -1,6 +1,9 @@
 import { React} from "react";
 import "../styles/global-styles.css";
 import LikedRecipeCard from "../recipe-cards/liked-recipe";
+import RecipeCard from "../recipe-cards/recipe-card";
+import RecipeReviewCard from "../recipe-cards/recipe-review";
+import ReviewNoRecipeCard from "../recipe-cards/review-no-recipe";
 
 function Home() {
 
@@ -11,7 +14,11 @@ function Home() {
   return (
     <div className="w-full mx-auto">
         {/* <h1 className="text-black">Home</h1> */}
-       <LikedRecipeCard />
+       <LikedRecipeCard recipeId="" likedDate="" />
+       <RecipeCard recipeId=""/>
+       <RecipeReviewCard reviewId=""/>
+       <ReviewNoRecipeCard reviewId=""/>
+       {/* TODO: get list of liked recipes andn reviews from followed chefs, order them from newst to oldest, then display them as either LikedRecipeCards or RecipeReviewCards */}
     </div>
   );
 }

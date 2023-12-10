@@ -15,7 +15,7 @@ function App() {
 		<HashRouter>
 			<div className="container flex wrap max-w-none">
         <NavBar />
-        <div className="flex p-8 grow">
+        <div className="flex grow wd-main">
 				<Routes>
 					<Route path="/" element={<Navigate to="home" />} />
 					<Route path="/home" element={<Home />} />
