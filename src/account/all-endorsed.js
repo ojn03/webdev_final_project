@@ -3,6 +3,7 @@ import "../styles/global-styles.css";
 
 function AllEndorsedRecipes() {
     
+    
   return (
     <div></div>
   );

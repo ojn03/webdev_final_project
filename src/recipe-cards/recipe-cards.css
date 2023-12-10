@@ -1,0 +1,164 @@
+.wd-card, .wd-no-recipe-card {
+	border-radius: 5px;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+	width: 90%;
+	display: flex;
+	flex-wrap: nowrap;
+	margin: auto;
+	flex-direction: row;
+	justify-content: start;
+    min-height:300px;
+    align-items: stretch;
+    overflow:hidden;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.wd-recipe-card {
+	border-radius: 5px;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+	width: 90%;
+	display: flex;
+	flex-wrap: wrap;
+	margin: auto;
+	flex-direction: column;
+	justify-content: start;
+    min-height:300px;
+    overflow:hidden;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.wd-no-recipe-card {
+    min-height: 0;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);;
+}
+
+
+.wd-card img {
+	object-fit: cover;
+	width: 100%;
+    min-height: 300px;
+	/* height: 100%; */
+    display:block;
+    /* min-height: 100%; */
+	border-radius: 0px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.wd-recipe-card img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	border-radius: 0px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+}
+
+.wd-img-container {
+    width: 60% !important;
+    /* height: 100%; */
+    
+    overflow:hidden;
+    min-height: 300px;
+    align-items: stretch;
+
+}
+
+.wd-recipe-img-container, .wd-review-img-container {
+    width: 100%;
+    height: 300px;
+    overflow:hidden;
+
+}
+
+.wd-review-img-container img {
+	border-radius: 0px;
+
+}
+
+.wd-card-title {
+    min-height: 300px;
+    max-height: fit-content;
+    width: 40%;
+}
+
+.wd-recipe-card-title {
+    min-height: 60px;
+}
+
+
+.wd-recipe-title {
+	font-family: "Playfair Display", serif;
+	font-size: 24pt;
+	font-weight: 500;
+	color: rgb(131, 110, 90);
+}
+
+.wd-liked-on,
+.wd-liked-on svg,
+.wd-liked-on p,
+.wd-inline-stats,
+.wd-inline-stats svg,
+.wd-inline-stats p {
+	display: inline-block;
+	vertical-align: middle !important;
+}
+
+.wd-inline-stats {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: zinc;
+}
+
+.wd-user-icon svg, .wd-user-icon img{
+    display: inline-block;
+    font-size: 20pt;
+}
+
+@media screen and (max-width: 1000px) {
+    
+    .wd-img-container {
+    width: 100% !important;
+    height: 300px;
+
+}
+	.wd-card img {
+		width: 100%;
+		min-height: 200px;
+		border-radius: 0px;
+		border-top-right-radius: 5px;
+		border-top-left-radius: 5px;
+	}
+
+	.wd-card {
+		flex-direction: column-reverse;
+	}
+
+    .wd-card-title {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+	.wd-card {
+		width: 100%;
+	}
+
+	.wd-liked-on p {
+		font-size: 8pt;
+	}
+
+	.wd-liked-on svg {
+		font-size: 7pt;
+	}
+
+    .wd-inline-stats p {
+		font-size: 10pt;
+	}
+
+	.wd-inline-stats svg {
+		font-size: 9pt;
+	}
+}
