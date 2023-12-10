@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useParams } from "react";
 import "../styles/global-styles.css";
 import "./recipe-styles.css";
 import {
@@ -12,6 +12,7 @@ import {
 import RecipeReviewList from "./review-list";
 
 function Recipe() {
+	const { id } = useParams();
 	let dummyRecipeTitle = "Creamy Mashed Potatoes With Butter and Herbs";
 	let dummyImgUrl =
 		"https://www.allrecipes.com/thmb/JMkfc1WFQiiKmTzvz98IXhlOMsg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/24771-basic-mashed-potatoes-mfs321-158e1626bfeb48daadb4f25d737ffee91-912ba4ee2c3c40a1837a5690971cc554.jpg";
@@ -56,7 +57,7 @@ function Recipe() {
 				alt="mashed potatoes"
 				src={dummyImgUrl}></img>
 			<div className="m-8">
-				<h1 className="wd-recipe-title">{dummyRecipeTitle}</h1>
+				<h1 className="wd-title">{dummyRecipeTitle}</h1>
 				<a
 					target="_blank"
 					rel="noreferrer"

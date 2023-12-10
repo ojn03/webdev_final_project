@@ -7,6 +7,7 @@ import { FaUserCircle } from "react-icons/fa";
 import './nav.css';
 
 function NavBar() {
+	// if not logged in, then replace profile with login
 	const links = ["home", "search", "profile"];
 	const icons = [<MdHomeFilled />, <FiSearch />, <FaUserCircle />];
 	const { pathname } = useLocation();

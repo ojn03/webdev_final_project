@@ -30,11 +30,76 @@
 
 }
 
+.wd-input {
+    width: 80%;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+    min-height: 35px;
+    border-radius: 2px;
+    padding: 4px;
+    padding-left: 8px;
+    min-width: 300px;
+    max-width: 550px;
+    margin-right: 5px;
+    margin-left: 5px;
+
+}
+
+.wd-input-small {
+    width: 500px;
+    max-width: 100%;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+    min-height: 35px;
+    border-radius: 2px;
+    padding: 4px;
+    padding-left: 8px;
+    margin-right: 5px;
+    margin-left: 5px;
+
+}
+
+.wd-title {
+	font-family: "Playfair Display", serif;
+	font-size: 28pt;
+	font-weight: 500;
+	color: rgb(131, 110, 90);
+}
+
+.wd-sub-title {
+	font-family: "Playfair Display", serif;
+	font-size: 21pt;
+}
+
+
+.wd-sub-sub-title {
+	font-family: "Playfair Display", serif;
+	font-size: 16pt;
+    margin-top: 6px;
+}
+
+.wd-dropdown {
+    background-color: rgba(0, 0, 0, 0.02);
+     box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+    min-height: 35px;
+    border-radius: 2px;
+    padding: 4px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+
+
+
 @media screen and (max-width: 600px) {
 	.wd-main {
 		width: 100%;
-		height: calc(100% - 50px);
+		height: calc(100vh - 50px);
 		margin-left: 0px;
 		margin-bottom: 50px;
+        overflow-y:auto;
 	}
+
+    .wd-input-small {
+    width: 400px;
+
+}
 }
