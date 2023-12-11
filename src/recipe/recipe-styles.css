@@ -6,13 +6,6 @@
     /* box-shadow: inset -0px 7px 9px -10px rgba(255, 255, 255, 1); */
 }
 
-.wd-recipe-title {
-	font-family: "Playfair Display", serif;
-	font-size: 28pt;
-	font-weight: 500;
-	color: rgb(131, 110, 90);
-}
-
 .wd-inline-stats,
 .wd-inline-stats svg,
 .wd-inline-stats p {
@@ -25,11 +18,6 @@
     padding-bottom: 5px;
     color: zinc;
     font-size: 13pt;
-}
-
-.wd-sub-title {
-	font-family: "Playfair Display", serif;
-	font-size: 21pt;
 }
 
 .wd-review-popup {

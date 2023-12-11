@@ -28,7 +28,7 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 					<textarea id="enter-review-box"
 						rows={4}
 						className="w-full wd-leave-review ring-0 p-2"
-						autofocus
+						
 						onChange={(e) =>
 							setCurrReview(e.targetValue ? e.targetValue : "")
 						}></textarea>

@@ -1,6 +1,6 @@
-.wd-card, .wd-no-recipe-card {
+.wd-card, .wd-no-recipe-card, .wd-recipe-card {
 	border-radius: 5px;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 	width: 90%;
 	display: flex;
 	flex-wrap: nowrap;
@@ -10,23 +10,18 @@
     min-height:300px;
     align-items: stretch;
     overflow:hidden;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .wd-recipe-card {
-	border-radius: 5px;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-	width: 90%;
-	display: flex;
+	
 	flex-wrap: wrap;
-	margin: auto;
+	
 	flex-direction: column;
-	justify-content: start;
-    min-height:300px;
-    overflow:hidden;
-    margin-top: 40px;
-    margin-bottom: 20px;
+	
+   
+  ;
 }
 
 .wd-no-recipe-card {
@@ -126,7 +121,7 @@
 }
 	.wd-card img {
 		width: 100%;
-		min-height: 200px;
+		height: 300px;
 		border-radius: 0px;
 		border-top-right-radius: 5px;
 		border-top-left-radius: 5px;
@@ -142,23 +137,8 @@
 }
 
 @media screen and (max-width: 450px) {
-	.wd-card {
+	/* .wd-card {
 		width: 100%;
-	}
+	} */
 
-	.wd-liked-on p {
-		font-size: 8pt;
-	}
-
-	.wd-liked-on svg {
-		font-size: 7pt;
-	}
-
-    .wd-inline-stats p {
-		font-size: 10pt;
-	}
-
-	.wd-inline-stats svg {
-		font-size: 9pt;
-	}
 }

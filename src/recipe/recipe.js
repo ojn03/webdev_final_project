@@ -12,19 +12,26 @@ import {
 import { useParams } from "react-router";
 import RecipeReviewList from "./review-list";
 import { fetchRecipeById } from "../search/recipe-service";
+import SigninPromptPopup from "../account/signin-prompts/signin-popup";
 
 function Recipe() {
+
+	let dummyRecipeTitle = "Creamy Mashed Potatoes With Butter and Herbs";
+
 	let dummyLikes = 14;
 	let dummyEndorsements = 3;
 	let dummyReviews = 0;
+	
 	const { id: recipeId } = useParams();
 	const [liked, setLiked] = useState(false); // would use a check to database instead of just setting false
 	const [endorsed, setEndorsed] = useState(false); // would use a check to database instead of just setting false
 	const [seeReviews, setSeeReviews] = useState(false);
 	const [recipe, setRecipe] = useState(undefined);
+	const [signinPopup, setSigninPopup] = useState(false);
 
 
 	useEffect(() => {
+		console.log(recipeId)
 		fetchRecipeById(recipeId).then((recipe) => {
 			setRecipe(recipe);
 		});
@@ -32,7 +39,15 @@ function Recipe() {
 	}, [recipeId]);
 
 	const handleLiked = () => {
-		setLiked(!liked);
+		// if not signed in:
+		let signedin = false;
+		if(!signedin ) {
+			setSigninPopup(true);
+		}
+		else {
+			setLiked(!liked);
+		}
+		
 		// now actually set it as liked or unliked in db
 		// and update number of likes
 	};
@@ -44,7 +59,14 @@ function Recipe() {
 	};
 
 	const openReviews = () => {
-		setSeeReviews(true);
+		let signedin = false;
+		if(!signedin ) {
+			setSigninPopup(true);
+		}
+		else {
+			setSeeReviews(true);
+		}
+		// setSeeReviews(true);
 		// open reviews popup
 	};
 
@@ -61,12 +83,28 @@ function Recipe() {
 	return (
 		<div className="w-full p-0 m-0">
 			<div>{seeReviews && <RecipeReviewList recipeId="someID" closeFunc={closeReviews} />}</div>
+			<div>{signinPopup && (
+					<SigninPromptPopup
+						userId={"fake id"}
+						onClose={setSigninPopup}
+					/>
+				)}</div>
 			<img
 				className="wd-recipe-header"
-				alt="mashed potatoes"
+				alt={recipe.label}
 				src={recipe.image}
 			></img>
 			<div className="m-8">
+
+				<h1 className="wd-title">{recipe.label}</h1>
+				{/* <a
+					target="_blank"
+					rel="noreferrer"
+					className="underline text-lg text-stone-500 hover:text-stone-400"
+					href={dummySource}>
+					{dummySource}
+				</a> */}
+
 				<div className="mt-6 bottom-0 max-h-32 flex align-left flex-auto flex-col bg-stone-200 p-2 px-3 rounded-md justify-center text-stone-600">
 					{/* if regular person, show this: */}
 					<span className="wd-inline-stats">
@@ -83,25 +121,28 @@ function Recipe() {
 						<p>{dummyEndorsements} endorsements</p>
 					</span>
 					{/* if chef, show this: */}
+
 					{/* <span className="wd-inline-stats">
-					<div className="wd-inline-stats">
-					  <FaRegHeart />
-					</div>{" "}
-					<p>{dummyLikes} likes</p>
-				  </span>
-				  <span className="wd-inline-stats">
-					<div
-					  className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
-					  onClick={() => handleLiked()}
-					>
-					  {endorsed ? (
-						<FaCircleCheck />
-					  ) : (
-						<FaRegCircleCheck />
-					  )}
-					</div>{" "}
-					<p>{dummyEndorsements} endorsements</p>
-				  </span> */}
+
+						<div className="wd-inline-stats">
+							<FaRegHeart />
+						</div>{" "}
+						<p>{dummyLikes} likes</p>
+					</span>
+					<span className="wd-inline-stats">
+						<div
+							className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
+							onClick={() => handleLiked()}>
+							{endorsed ? (
+								<FaCircleCheck />
+							) : (
+								<FaRegCircleCheck />
+							)}
+						</div>{" "}
+						<p>{dummyEndorsements} endorsements</p>
+					</span> */}
+
+
 					{/* for both users and chefs: */}
 					<span
 						className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
@@ -113,6 +154,7 @@ function Recipe() {
 						<p>{dummyReviews} reviews</p>
 					</span>
 				</div>
+
 				<div className="my-3 mt-6">
 					<h2 className="wd-sub-title text-stone-500">Ingredients</h2>
 					<ul className="list-disc ml-5 mt-3">
@@ -123,12 +165,13 @@ function Recipe() {
 				</div>
 				{recipe.instructionLines.length !== 0 ? <div className="my-3 mt-6">
 					<h2 className="wd-sub-title text-stone-500">Instructions</h2>
-					<ul className="list-disc ml-5 mt-3">
+					<ul className="list-disc ml-5 mt-3 !pb-6">
 						{recipe.instructionLines.map((step, index) => (
-							<li key={index + 1}>{step}</li>
+							<li className="pl-1 mb-2" key={index + 1}>{step}</li>
 						))}
 					</ul>
 				</div> : undefined}
+
 			</div>
 		</div>
 	);
