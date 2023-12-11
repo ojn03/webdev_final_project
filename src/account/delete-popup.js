@@ -1,12 +1,16 @@
-import { React } from "react";
+import { React, useState } from "react";
+import { Navigate } from "react-router-dom";
 import "../styles/global-styles.css";
 import { IoClose } from "react-icons/io5";
 
 function DeleteAccountPopup({ userId, onClose }) {
+
+    const [confirm, setConfirm] = useState(false);
     
     function deleteAccount() {
         // delete account
         // route to the sign up page
+        setConfirm(true);
     }
 	return (
 		<div className="fixed wd-delete-popup-bg">
@@ -22,11 +26,12 @@ function DeleteAccountPopup({ userId, onClose }) {
 						action cannot be undone.
 					</span>
                     <div className="w-full flex justify-center mt-4 mb-2">
-                        <button className="wd-btn wd-btn-danger wd-btn-large !mr-4">
+                        <button onClick={() => (deleteAccount())} className="wd-btn wd-btn-danger wd-btn-large !mr-4">
                             Yes, I'm sure
                         </button>
                         <button onClick={() => onClose(false)} className="wd-btn wd-btn-large !ml-4">
                             No, cancel
+                            {confirm && <Navigate to="/signup" replace={true} />}
                         </button>
                     </div>
 				</div>

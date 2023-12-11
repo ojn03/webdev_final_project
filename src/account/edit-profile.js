@@ -100,12 +100,13 @@ function EditProfile() {
 					className="wd-btn wd-btn-success w-60 self-center"
 					onClick={() => update()}>
 					Update
-					{user && <Navigate to="/dashboard" replace={true} />}
+					{user && <Navigate to="/profile" replace={true} />}
 				</button>
 				<button
 					className="wd-btn w-60 self-center"
 					onClick={() => update()}>
 					Cancel
+          {user && <Navigate to="/profile" replace={true} />}
 				</button>
 				<button
 					className="wd-btn wd-btn-danger w-60 self-center"
