@@ -12,10 +12,9 @@ function EditProfile() {
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [email, setEmail] = useState("");
-	const [isChef, setIsChef] = useState(false);
 	const [user, setUser] = useState(undefined);
 	const [error, setError] = useState(undefined);
-  const [deletePopup, setDeletePopup] = useState(false);
+	const [deletePopup, setDeletePopup] = useState(false);
 	const update = () => {
 		let newUser = {};
 		// try to create new user
@@ -24,14 +23,20 @@ function EditProfile() {
 		setUser(newUser);
 	};
 	const deleteAccount = () => {
-    setDeletePopup(true);
+		setDeletePopup(true);
 		// sign up
 	};
 
 	return (
-
 		<div className={"flex w-full justify-center"}>
-      <div>{deletePopup && <DeleteAccountPopup userId={"fake id"} onClose={setDeletePopup}/>}</div>
+			<div>
+				{deletePopup && (
+					<DeleteAccountPopup
+						userId={"fake id"}
+						onClose={setDeletePopup}
+					/>
+				)}
+			</div>
 			<div className="flex flex-col">
 				<h1 className="wd-title mt-6 self-center">Edit Profile</h1>
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
@@ -58,15 +63,17 @@ function EditProfile() {
 					placeholder="Email Address"
 					className="wd-input-small m-2"
 					onChange={(e) => setEmail(e.target.value)}></input>
+
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
-					Password
+					New Password
 				</span>
 				<input
 					type={"password"}
-					placeholder="Password"
+					placeholder="New Password"
 					className="wd-input-small m-2"
-					onChange={(e) => setPassword(e.target.value)}></input>
-				<span className="ml-1 wd-sub-sub-title text-stone-700">
+					onChange={(e) => setNewPassword(e.target.value)}></input>
+				
+        <span className="ml-1 wd-sub-sub-title text-stone-700">
 					Confirm Password
 				</span>
 				<input
@@ -76,17 +83,16 @@ function EditProfile() {
 					onChange={(e) =>
 						setPasswordConfirm(e.target.value)
 					}></input>
+
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
-					User Type
+					Old Password
 				</span>
-				<select
-					name="userType"
-					id="userType"
-					className="wd-dropdown"
-					onChange={(e) => setIsChef(e.target.value === "chef")}>
-					<option value="normal">Home Cook</option>
-					<option value="chef">Professional Chef</option>
-				</select>
+				<input
+					type={"password"}
+					placeholder="Old Password"
+					className="wd-input-small m-2"
+					onChange={(e) => setPassword(e.target.value)}></input>
+
 				<br className="m-5"></br>
 				{error && <p>{error.message}</p>}
 				{/* if successful, route to profile. Otherwise, stay on some page */}
