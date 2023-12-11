@@ -45,3 +45,25 @@ export const fetchRecipeById = async (id) => {
         throw error; // Re-throw the error to propagate it further if needed
     }
 };
+
+
+// export const fullTextSearch = async (text) => {
+//     const response = await axios.get(
+//         `${NAPSTER_API}/search/verbose?query=${text}&apikey=${KEY}`
+//     );
+//     return response.data;
+// };
+
+// export const albumDetails = async (albumId) => {
+//     const response = await axios.get(
+//         `${NAPSTER_API}/albums/${albumId}?apikey=${KEY}`
+//     );
+//     return response.data;
+// };
+
+// export const albumTracks = async (trackId) => {
+//     const response = await axios.get(
+//         `${NAPSTER_API}/albums/${trackId}?apikey=${KEY}`
+//     );
+//     return response.data;
+// };
