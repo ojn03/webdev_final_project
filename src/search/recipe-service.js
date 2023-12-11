@@ -36,7 +36,6 @@ export const fetchRecipeById = async (id) => {
     };
 
     const apiUrl = `${RECIPE_API}/${id}?${new URLSearchParams(params)}`;
-    console.log(apiUrl)
     try {
         const response = await axios.get(apiUrl);
         console.log(response.data.recipe)

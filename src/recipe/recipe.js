@@ -17,7 +17,6 @@ function Recipe() {
 	let dummyLikes = 14;
 	let dummyEndorsements = 3;
 	let dummyReviews = 0;
-	let dummyIngredients = ["3 russet potatoes", "4 tablespoons butter, unsalted", "1/2 cup heavy cream", "2 tablespoons green onions, thinly sliced on a bias", "salt and pepper, to taste"]
 	const { id: recipeId } = useParams();
 	const [liked, setLiked] = useState(false); // would use a check to database instead of just setting false
 	const [endorsed, setEndorsed] = useState(false); // would use a check to database instead of just setting false

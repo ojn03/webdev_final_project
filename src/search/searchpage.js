@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/global-styles.css";
-import { fetchRecipe, fetchRecipeByQuery } from "./recipe-service";
-import { Button, Card } from 'react-bootstrap';
+import { fetchRecipeByQuery } from "./recipe-service";
+import { Button } from 'react-bootstrap';
 import RecipePreview from "./recipe_preview";
 
 function Search() {
@@ -14,8 +14,7 @@ function Search() {
 
   const handleFetchRecipe = async () => {
     try {
-      const result = await fetchRecipeByQuery(searchTerm); // Assuming you have a fetchRecipe function
-      console.log(result)
+      const result = await fetchRecipeByQuery(searchTerm);
       setData(result || []);
     } catch (error) {
       console.error("Error fetching recipe:", error);
@@ -38,7 +37,6 @@ function Search() {
         {data.hits &&
           data.hits.map((hit, index) => {
             if (hit.recipe.instructionLines && hit.recipe.instructionLines.length === 0) {
-              console.log(hit.recipe.instructionLines)
               return undefined
             }
             return (<RecipePreview apiResult={hit} key={index} />)
