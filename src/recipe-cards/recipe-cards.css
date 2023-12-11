@@ -121,7 +121,7 @@
 }
 	.wd-card img {
 		width: 100%;
-		min-height: 200px;
+		height: 300px;
 		border-radius: 0px;
 		border-top-right-radius: 5px;
 		border-top-left-radius: 5px;
@@ -137,23 +137,8 @@
 }
 
 @media screen and (max-width: 450px) {
-	.wd-card {
+	/* .wd-card {
 		width: 100%;
-	}
+	} */
 
-	.wd-liked-on p {
-		font-size: 8pt;
-	}
-
-	.wd-liked-on svg {
-		font-size: 7pt;
-	}
-
-    .wd-inline-stats p {
-		font-size: 10pt;
-	}
-
-	.wd-inline-stats svg {
-		font-size: 9pt;
-	}
 }

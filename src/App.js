@@ -14,20 +14,20 @@ function App() {
 	return (
 		<HashRouter>
 			<div className="container flex wrap max-w-none">
-        <NavBar />
-        <div className="flex grow wd-main">
-				<Routes>
-					<Route path="/" element={<Navigate to="home" />} />
-					<Route path="/home" element={<Home />} />
-					<Route path="/search" element={<Search />} />
-					<Route path="/profile" element={<Profile />} />
-					<Route path="/profile/:id" element={<Profile />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/signup" element={<Signup />} />
-					<Route path="/profile/edit" element={<EditProfile />} />
-					<Route path="/recipe/:id" element={<Recipe />} />
-				</Routes>
-        </div>
+				<NavBar />
+				<div className="flex grow wd-main">
+					<Routes>
+						<Route path="/" element={<Navigate to="home" />} />
+						<Route path="/home" element={<Home />} />
+						<Route path="/search" element={<Search />} />
+						<Route path="/profile" element={<Profile />} />
+						<Route path="/profile/:id" element={<Profile />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/signup" element={<Signup />} />
+						<Route path="/profile/edit" element={<EditProfile />} />
+						<Route path="/recipe/:id" element={<Recipe />} />
+					</Routes>
+				</div>
 			</div>
 		</HashRouter>
 	);

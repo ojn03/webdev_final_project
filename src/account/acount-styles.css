@@ -60,6 +60,25 @@
     width: 120px;
 }
 
+.wd-delete-popup {
+    max-width: 80vw;
+    max-height: 80vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+}
+
+
+
+.wd-delete-popup-bg {
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top:0; 
+    background-color: rgba(0, 0, 0, .4);
+}
+
 @media screen and (max-width: 600px) {
 	.wd-profile-btn-bar {
 		flex-direction: row;
@@ -96,5 +115,18 @@ justify-content: center;
 .wd-follow .wd-btn {
     height: 40px;
     width: 50%;
+}
+
+.wd-delete-popup {
+    width: 80vw;
+    max-height: 80vh;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+}
+.wd-delete-popup .wd-btn {
+    width: 300px;
+    margin: 8px 0px !important;
 }
 }
