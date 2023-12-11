@@ -4,7 +4,7 @@ import "../styles/global-styles.css";
 import "./recipe-cards.css";
 import { FaUserCircle } from "react-icons/fa";
 
-function RecipeReviewCard(reviewId) {
+function RecipeReviewCard({reviewId}) {
 	let dummyUsername = "the_best_chef";
 	let dummyProfPic = <FaUserCircle />;
 	let dummyRecipeTitle = "Creamy Mashed Potatoes";

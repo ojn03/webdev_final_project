@@ -68,11 +68,13 @@ function Signup() {
 				</select>
         <br className="m-5"></br>
 
+        {/* if successful, route to profile. Otherwise, stay on some page */}
 				<button
 					className="wd-btn wd-btn-success w-60 self-center"
 					onClick={() => signUp()}>
 					Sign Up
 				</button>
+
 				<span className="mt-2 self-center mb-4">
 					Already have an account?{" "}
 					<Link

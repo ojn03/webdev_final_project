@@ -23,6 +23,43 @@
 	margin-right: 0px;
 }
 
+.wd-prof-content {
+    width: 100%;
+    margin: 20px;
+    border-radius: 8px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    min-width: 40px;
+    overflow: hidden;
+}
+
+.wd-prof-content .wd-card, .wd-prof-content .wd-review-card, .wd-prof-content .wd-recipe-card {
+    box-shadow: none;
+    border-radius: 0px;
+}
+
+.wd-prof-content .wd-card img {
+    border-radius: 0px;
+}
+
+.wd-active {
+    background-color: #d7e6f7;
+}
+
+.wd-prof-tab {
+    text-align: center;
+}
+
+.wd-prof-tab-bar {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow:hidden;
+}
+
+.wd-follow .wd-btn {
+    height: 40px;
+    width: 120px;
+}
+
 @media screen and (max-width: 600px) {
 	.wd-profile-btn-bar {
 		flex-direction: row;
@@ -46,4 +83,18 @@
      
         height: fit-content;
     }
+
+    .wd-prof-content {
+ 
+    margin: 20px 10px;
+}
+
+.wd-follow {
+justify-content: center;
+}
+
+.wd-follow .wd-btn {
+    height: 40px;
+    width: 50%;
+}
 }

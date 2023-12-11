@@ -11,7 +11,7 @@ import {
 	FaComment,
 } from "react-icons/fa6";
 
-function LikedRecipeCard({recipeId, likedDate}) {
+function EndorsedRecipeCard(recipeId, likedDate) {
 	let dummyRecipeTitle = "Creamy Mashed Potatoes With Butter and Herbs";
 	let dummyImgUrl =
 		"https://www.allrecipes.com/thmb/JMkfc1WFQiiKmTzvz98IXhlOMsg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/24771-basic-mashed-potatoes-mfs321-158e1626bfeb48daadb4f25d737ffee91-912ba4ee2c3c40a1837a5690971cc554.jpg";
@@ -34,7 +34,7 @@ function LikedRecipeCard({recipeId, likedDate}) {
 					className="wd-card-title flex align-left flex-auto flex-col p-6 content-end justify-between">
 					<div>
 						<span className="text-xs italic text-stone-500 wd-liked-on">
-							<FaHeart /> <p>You liked on {dummyLikedDate}</p>
+							<FaCircleCheck /> <p>You endorsed on {dummyLikedDate}</p>
 						</span>
 						<p className="wd-recipe-title py-1">
 							{dummyRecipeTitle}
@@ -63,4 +63,4 @@ function LikedRecipeCard({recipeId, likedDate}) {
 		</Link>
 	);
 }
-export default LikedRecipeCard;
+export default EndorsedRecipeCard;
