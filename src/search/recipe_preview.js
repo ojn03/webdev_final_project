@@ -3,11 +3,11 @@ import "../styles/global-styles.css";
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 
-const REGEX_TO_MATCH = /recipe_([a-f\d]+)/i;
+const REGEX_TO_MATCH = /#recipe_([^\/]+)$/;
 
 function RecipePreview({ apiResult }) {
 
-    const match = REGEX_TO_MATCH.exec(apiResult.recipe.uri);
+    const match = apiResult.recipe.uri.match(REGEX_TO_MATCH)[1];
 
     return (
         <div className="col-md-4 mb-3">
