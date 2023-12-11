@@ -8,7 +8,7 @@ export const albumImageUrl = (album) =>
     `${NAPSTER_IMAGE_URL}/albums/${album.id}
 /images/300x300.jpg`;
 
-export const fetchRecipe = async (query) => {
+export const fetchRecipeByQuery = async (query) => {
 
     const params = {
         q: query,
@@ -18,10 +18,29 @@ export const fetchRecipe = async (query) => {
     };
 
     const apiUrl = `${RECIPE_API}?${new URLSearchParams(params)}`;
-    console.log(apiUrl)
+
     try {
         const response = await axios.get(apiUrl);
         return response.data;
+    } catch (error) {
+        console.error('Error fetching data:', error.message);
+        throw error; // Re-throw the error to propagate it further if needed
+    }
+};
+
+export const fetchRecipeById = async (id) => {
+    const params = {
+        app_key: KEY,
+        type: 'public',
+        app_id: APP_ID,
+    };
+
+    const apiUrl = `${RECIPE_API}/${id}?${new URLSearchParams(params)}`;
+    console.log(apiUrl)
+    try {
+        const response = await axios.get(apiUrl);
+        console.log(response.data.recipe)
+        return response.data.recipe;
     } catch (error) {
         console.error('Error fetching data:', error.message);
         throw error; // Re-throw the error to propagate it further if needed

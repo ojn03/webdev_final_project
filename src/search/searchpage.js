@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/global-styles.css";
-import { fetchRecipe } from "./recipe-service";
+import { fetchRecipe, fetchRecipeByQuery } from "./recipe-service";
 import { Button, Card } from 'react-bootstrap';
 import RecipePreview from "./recipe_preview";
 import "./search-styles.css";
@@ -16,7 +16,7 @@ function Search() {
 
   const handleFetchRecipe = async () => {
     try {
-      const result = await fetchRecipe(searchTerm); // Assuming you have a fetchRecipe function
+      const result = await fetchRecipeByQuery(searchTerm); // Assuming you have a fetchRecipe function
       console.log(result)
       setData(result || []);
       setPrevSearchTerm(searchTerm);
@@ -40,10 +40,18 @@ function Search() {
       </Button>
       <div className="row flex flex-row flex-wrap wd-search-results">
         {data.hits &&
+
           data.hits.map((hit, index) => (
-            <RecipePreview apiResult={hit} key={index}/>
+            if (hit.recipe.instructionLines && hit.recipe.instructionLines.length === 0) {
+              console.log(hit.recipe.instructionLines)
+              return undefined
+            }
+            return (<RecipePreview apiResult={hit} key={index} />)
+          }
+//             <RecipePreview apiResult={hit} key={index}/>
           ))}
           {data.hits && data.hits.length === 0 && <div className="text-stone-600">No results matching "{prevSearchTerm}"</div>}
+
 
       </div>
     </div>
