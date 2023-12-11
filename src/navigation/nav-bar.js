@@ -11,6 +11,7 @@ function NavBar() {
 	const links = ["home", "search", "profile"];
 	const icons = [<MdHomeFilled />, <FiSearch />, <FaUserCircle />];
 	const { pathname } = useLocation();
+	console.log(pathname);
 
 	return (
 		<div className="flex min-[600px]:flex-col max-[600px]:flex-row p-2 justify-start items-center wd-nav-bar">
@@ -18,7 +19,7 @@ function NavBar() {
 				<Link
 					key={index}
 					to={`/${link}`}
-					className={`wd-nav-icon min-[600px]:text-3xl max-[600px]:text-2xl m-2 text-stone-600 ${pathname.includes(link) && "active"}`}>
+					className={`wd-nav-icon min-[600px]:text-3xl max-[600px]:text-2xl m-2 text-stone-600 ${pathname.includes("/" + link) && "active"}`}>
 					{icons[index]}
 				</Link>
 			))}

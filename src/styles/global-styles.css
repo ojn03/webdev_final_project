@@ -30,6 +30,16 @@
 
 }
 
+.wd-btn-danger {
+    background-color: #d9887c;
+
+}
+
+.wd-btn-danger:hover {
+    background-color: #c77367;
+
+}
+
 .wd-input {
     width: 80%;
     box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
