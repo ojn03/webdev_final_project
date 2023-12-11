@@ -12,6 +12,7 @@ import {
 import { useParams } from "react-router";
 import RecipeReviewList from "./review-list";
 import { fetchRecipeById } from "../search/recipe-service";
+import SigninPromptPopup from "../account/signin-prompts/signin-popup";
 
 function Recipe() {
 
@@ -26,6 +27,7 @@ function Recipe() {
 	const [endorsed, setEndorsed] = useState(false); // would use a check to database instead of just setting false
 	const [seeReviews, setSeeReviews] = useState(false);
 	const [recipe, setRecipe] = useState(undefined);
+	const [signinPopup, setSigninPopup] = useState(false);
 
 
 	useEffect(() => {
@@ -37,7 +39,15 @@ function Recipe() {
 	}, [recipeId]);
 
 	const handleLiked = () => {
-		setLiked(!liked);
+		// if not signed in:
+		let signedin = false;
+		if(!signedin ) {
+			setSigninPopup(true);
+		}
+		else {
+			setLiked(!liked);
+		}
+		
 		// now actually set it as liked or unliked in db
 		// and update number of likes
 	};
@@ -49,7 +59,14 @@ function Recipe() {
 	};
 
 	const openReviews = () => {
-		setSeeReviews(true);
+		let signedin = false;
+		if(!signedin ) {
+			setSigninPopup(true);
+		}
+		else {
+			setSeeReviews(true);
+		}
+		// setSeeReviews(true);
 		// open reviews popup
 	};
 
@@ -66,6 +83,12 @@ function Recipe() {
 	return (
 		<div className="w-full p-0 m-0">
 			<div>{seeReviews && <RecipeReviewList recipeId="someID" closeFunc={closeReviews} />}</div>
+			<div>{signinPopup && (
+					<SigninPromptPopup
+						userId={"fake id"}
+						onClose={setSigninPopup}
+					/>
+				)}</div>
 			<img
 				className="wd-recipe-header"
 				alt={recipe.label}
@@ -142,7 +165,7 @@ function Recipe() {
 				</div>
 				{recipe.instructionLines.length !== 0 ? <div className="my-3 mt-6">
 					<h2 className="wd-sub-title text-stone-500">Instructions</h2>
-					<ul className="list-disc ml-5 mt-3">
+					<ul className="list-disc ml-5 mt-3 !pb-6">
 						{recipe.instructionLines.map((step, index) => (
 							<li className="pl-1 mb-2" key={index + 1}>{step}</li>
 						))}

@@ -12,7 +12,7 @@ function Home() {
 
     
   return (
-    <div className="w-full mx-auto">
+    <div className="w-full mx-auto !mb-6">
         {/* <h1 className="text-black">Home</h1> */}
        <LikedRecipeCard recipeId="" likedDate="" />
        <RecipeCard recipeId=""/>
