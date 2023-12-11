@@ -30,11 +30,13 @@ function Login() {
 					className="wd-input-small m-2"
 					onChange={(e) => setPassword(e.target.value)}></input>
 
+				{/* if successful, route to profile. Otherwise, stay on some page */}
 				<button
 					className="wd-btn wd-btn-success w-60 self-center"
 					onClick={() => signIn()}>
 					Sign In
 				</button>
+				
 				<span className="mt-2 self-center mb-4">
 					Don't have an account?{" "}
 					<Link

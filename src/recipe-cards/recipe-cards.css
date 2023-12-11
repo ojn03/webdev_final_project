@@ -1,6 +1,6 @@
-.wd-card, .wd-no-recipe-card {
+.wd-card, .wd-no-recipe-card, .wd-recipe-card {
 	border-radius: 5px;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 	width: 90%;
 	display: flex;
 	flex-wrap: nowrap;
@@ -10,23 +10,18 @@
     min-height:300px;
     align-items: stretch;
     overflow:hidden;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .wd-recipe-card {
-	border-radius: 5px;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-	width: 90%;
-	display: flex;
+	
 	flex-wrap: wrap;
-	margin: auto;
+	
 	flex-direction: column;
-	justify-content: start;
-    min-height:300px;
-    overflow:hidden;
-    margin-top: 40px;
-    margin-bottom: 20px;
+	
+   
+  ;
 }
 
 .wd-no-recipe-card {
