@@ -21,7 +21,7 @@ function Recipe() {
 	let dummyLikes = 14;
 	let dummyEndorsements = 3;
 	let dummyReviews = 0;
-	
+
 	const { id: recipeId } = useParams();
 	const [liked, setLiked] = useState(false); // would use a check to database instead of just setting false
 	const [endorsed, setEndorsed] = useState(false); // would use a check to database instead of just setting false
@@ -31,7 +31,6 @@ function Recipe() {
 
 
 	useEffect(() => {
-		console.log(recipeId)
 		fetchRecipeById(recipeId).then((recipe) => {
 			setRecipe(recipe);
 		});
@@ -41,13 +40,13 @@ function Recipe() {
 	const handleLiked = () => {
 		// if not signed in:
 		let signedin = false;
-		if(!signedin ) {
+		if (!signedin) {
 			setSigninPopup(true);
 		}
 		else {
 			setLiked(!liked);
 		}
-		
+
 		// now actually set it as liked or unliked in db
 		// and update number of likes
 	};
@@ -60,7 +59,7 @@ function Recipe() {
 
 	const openReviews = () => {
 		let signedin = false;
-		if(!signedin ) {
+		if (!signedin) {
 			setSigninPopup(true);
 		}
 		else {
@@ -84,11 +83,11 @@ function Recipe() {
 		<div className="w-full p-0 m-0">
 			<div>{seeReviews && <RecipeReviewList recipeId="someID" closeFunc={closeReviews} />}</div>
 			<div>{signinPopup && (
-					<SigninPromptPopup
-						userId={"fake id"}
-						onClose={setSigninPopup}
-					/>
-				)}</div>
+				<SigninPromptPopup
+					userId={"fake id"}
+					onClose={setSigninPopup}
+				/>
+			)}</div>
 			<img
 				className="wd-recipe-header"
 				alt={recipe.label}
