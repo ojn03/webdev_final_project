@@ -14,10 +14,13 @@ import RecipeReviewList from "./review-list";
 import { fetchRecipeById } from "../search/recipe-service";
 
 function Recipe() {
+
+	let dummyRecipeTitle = "Creamy Mashed Potatoes With Butter and Herbs";
+
 	let dummyLikes = 14;
 	let dummyEndorsements = 3;
 	let dummyReviews = 0;
-	let dummyIngredients = ["3 russet potatoes", "4 tablespoons butter, unsalted", "1/2 cup heavy cream", "2 tablespoons green onions, thinly sliced on a bias", "salt and pepper, to taste"]
+	
 	const { id: recipeId } = useParams();
 	const [liked, setLiked] = useState(false); // would use a check to database instead of just setting false
 	const [endorsed, setEndorsed] = useState(false); // would use a check to database instead of just setting false
@@ -65,10 +68,20 @@ function Recipe() {
 			<div>{seeReviews && <RecipeReviewList recipeId="someID" closeFunc={closeReviews} />}</div>
 			<img
 				className="wd-recipe-header"
-				alt="mashed potatoes"
+				alt={recipe.label}
 				src={recipe.image}
 			></img>
 			<div className="m-8">
+
+				<h1 className="wd-title">{recipe.label}</h1>
+				{/* <a
+					target="_blank"
+					rel="noreferrer"
+					className="underline text-lg text-stone-500 hover:text-stone-400"
+					href={dummySource}>
+					{dummySource}
+				</a> */}
+
 				<div className="mt-6 bottom-0 max-h-32 flex align-left flex-auto flex-col bg-stone-200 p-2 px-3 rounded-md justify-center text-stone-600">
 					{/* if regular person, show this: */}
 					<span className="wd-inline-stats">
@@ -85,25 +98,28 @@ function Recipe() {
 						<p>{dummyEndorsements} endorsements</p>
 					</span>
 					{/* if chef, show this: */}
+
 					{/* <span className="wd-inline-stats">
-					<div className="wd-inline-stats">
-					  <FaRegHeart />
-					</div>{" "}
-					<p>{dummyLikes} likes</p>
-				  </span>
-				  <span className="wd-inline-stats">
-					<div
-					  className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
-					  onClick={() => handleLiked()}
-					>
-					  {endorsed ? (
-						<FaCircleCheck />
-					  ) : (
-						<FaRegCircleCheck />
-					  )}
-					</div>{" "}
-					<p>{dummyEndorsements} endorsements</p>
-				  </span> */}
+
+						<div className="wd-inline-stats">
+							<FaRegHeart />
+						</div>{" "}
+						<p>{dummyLikes} likes</p>
+					</span>
+					<span className="wd-inline-stats">
+						<div
+							className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
+							onClick={() => handleLiked()}>
+							{endorsed ? (
+								<FaCircleCheck />
+							) : (
+								<FaRegCircleCheck />
+							)}
+						</div>{" "}
+						<p>{dummyEndorsements} endorsements</p>
+					</span> */}
+
+
 					{/* for both users and chefs: */}
 					<span
 						className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
@@ -115,6 +131,7 @@ function Recipe() {
 						<p>{dummyReviews} reviews</p>
 					</span>
 				</div>
+
 				<div className="my-3 mt-6">
 					<h2 className="wd-sub-title text-stone-500">Ingredients</h2>
 					<ul className="list-disc ml-5 mt-3">
@@ -127,10 +144,11 @@ function Recipe() {
 					<h2 className="wd-sub-title text-stone-500">Instructions</h2>
 					<ul className="list-disc ml-5 mt-3">
 						{recipe.instructionLines.map((step, index) => (
-							<li key={index + 1}>{step}</li>
+							<li className="pl-1 mb-2" key={index + 1}>{step}</li>
 						))}
 					</ul>
 				</div> : undefined}
+
 			</div>
 		</div>
 	);
