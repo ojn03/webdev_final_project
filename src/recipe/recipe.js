@@ -25,7 +25,6 @@ function Recipe() {
 
 
 	useEffect(() => {
-		console.log(recipeId)
 		fetchRecipeById(recipeId).then((recipe) => {
 			setRecipe(recipe);
 		});
