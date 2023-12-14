@@ -14,7 +14,7 @@ function Signup() {
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [error, setError] = useState("");
 	const [isChef, setIsChef] = useState(false);
-	const [experienceLevel, setExperienceLevel] = useState('');
+	const [experience, setExperience] = useState('');
 	const [restaurant, setRestaurant] = useState('');
 	const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ function Signup() {
 				last: lastName,
 				username: username,
 				password: password,
-				...(!isChef && { experienceLevel: experienceLevel }),
+				...(!isChef && { experience: experience }),
 				...(isChef && { restaurant: restaurant }),
 				type: isChef ? "chef" : "basic"
 			}
@@ -103,7 +103,7 @@ function Signup() {
 						<span className="ml-1 wd-sub-sub-title text-stone-700">
 							Experience Level
 						</span>
-						<select id="experience" className="wd-dropdown" value={experienceLevel} onChange={(event) => setExperienceLevel(event.target.value)}>;
+						<select id="experience" className="wd-dropdown" value={experience} onChange={(event) => setExperience(event.target.value)}>;
 							<option value="">Select</option>
 							<option value="1">Level 1</option>
 							<option value="2">Level 2</option>

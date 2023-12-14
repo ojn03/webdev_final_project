@@ -16,7 +16,7 @@ function EditProfile() {
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [restaurant, setRestaurant] = useState("");
-	const [experienceLevel, setExperienceLevel] = useState("");
+	const [experience, setExperience] = useState("");
 	const [isChef, setIsChef] = useState(false);
 	const [error, setError] = useState(undefined);
 	const [deletePopup, setDeletePopup] = useState(false);
@@ -35,7 +35,7 @@ function EditProfile() {
 		if (account.type === "chef") {
 			setRestaurant(account.restaurant);
 		} else {
-			setExperienceLevel(account.experienceLevel);
+			setExperience(account.experience);
 		}
 	}, [account.experienceLevel, account.first, account.last, account.restaurant, account.type, account.username]);
 
@@ -54,7 +54,7 @@ function EditProfile() {
 				last: lastName,
 				username: username,
 				password: newPassword ? newPassword : account.password,
-				...(!isChef && { experienceLevel: experienceLevel }),
+				...(!isChef && { experience: experienceLevel }),
 				...(isChef && { restaurant: restaurant }),
 				type: isChef ? "chef" : "basic"
 			}

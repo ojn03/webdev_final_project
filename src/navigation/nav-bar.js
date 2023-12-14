@@ -12,11 +12,16 @@ function NavBar() {
 	const [account, setAccount] = useState(null);
 
 	const fetchAccount = async () => {
-		const account = await client.account();
-		setAccount(account);
+		try {
+			const account = await client.account();
+			setAccount(account);
+		}
+		catch (error) {
+			console.log(error);
+		}
 	};
 
-	
+
 	useEffect(() => {
 		fetchAccount();
 	}, []);
