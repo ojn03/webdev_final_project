@@ -143,7 +143,7 @@ function EditProfile() {
 					<option value="normal">Home Cook</option>
 					<option value="chef">Professional Chef</option>
 				</select>
-				{isChef ?
+				{!isChef ?
 					<>
 						<span className="ml-1 wd-sub-sub-title text-stone-700">
 							Experience Level
