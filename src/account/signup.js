@@ -36,6 +36,7 @@ function Signup() {
 			const currentUser = await client.signup(userObject);
 			navigate("/profile");
 		} catch (error) {
+			console.log(error)
 			setError(error.message)
 		}
 	};

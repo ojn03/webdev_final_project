@@ -11,8 +11,13 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 	const [reviews, setReviews] = useState(null);
 
 	const fetchAccount = async () => {
-		const account = await client.account();
-		setAccount(account);
+		try {
+			const account = await client.account();
+			setAccount(account);
+		}
+		catch (error) {
+			console.log(error);
+		}
 	};
 
 	const fetchReviews = async () => {
