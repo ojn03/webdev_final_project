@@ -1,12 +1,21 @@
 import { React, useState } from "react";
 import "../styles/global-styles.css";
 import { Link } from "react-router-dom";
+import * as client from "../client";
+import { useNavigate } from "react-router";
 
 function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const signIn = () => {
-		// sign in
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
+	const signIn = async () => {
+		try {
+			const currentUser = await client.signin({ username: username, password: password });
+			navigate("/profile");
+		} catch (error) {
+			setError(error);
+		}
 	};
 
 	return (
@@ -36,7 +45,7 @@ function Login() {
 					onClick={() => signIn()}>
 					Sign In
 				</button>
-				
+
 				<span className="mt-2 self-center mb-4">
 					Don't have an account?{" "}
 					<Link
