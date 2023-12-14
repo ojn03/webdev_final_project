@@ -1,45 +1,72 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "../styles/global-styles.css";
 import "./acount-styles.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LikedRecipeCard from "../recipe-cards/liked-recipe";
 // import EndorsedRecipeCard from "../recipe-cards/endorsed-recipe";
 import RecipeReviewCard from "../recipe-cards/recipe-review";
+import * as client from "../client.js";
 
 function Profile() {
-	// use params to get user id. If current user is logged in and there are no params, then show their own page
-	// if user is logged in and there is an id in the param, show that profile of the user in the param
-	const dummyUsername = "amazing_chef";
-	const dummyName = "John Doe";
 	const [currentTab, setCurrentTab] = useState(0);
+	const [loggedInAccount, setLoggedInAccount] = useState(null);
+	const { id: profileId } = useParams();
+
+	const fetchAccount = async () => {
+		try {
+			const account = await client.account();
+			setLoggedInAccount(account);
+		}
+		catch (error) {
+			console.log(error);
+		}
+	};
+
+	useEffect(() => {
+		fetchAccount();
+	}, []);
+
+	const profile = client.findUserById(profileId);
+
+	const likedArray = client.findLikesByAuthorId(profileId);
+
+	const reviewArray = client.findCommentsByAuthorId(profileId);
+
+	if (!loggedInAccount || !profile || !likedArray || !reviewArray) {
+		return <div>Loading...</div>;
+	}
+
+	const ourAccount = !profileId || loggedInAccount?._id === profileId;
+
+
 
 	const myUserTabs = ["Liked", "Following"];
 	const myChefTabs = ["Liked", "Reviews", "Following", "Followers"];
 	const otherChefTabs = ["Liked", "Reviews", "Following"];
 
-	// fake liked IDs
-	const dummyLiked = [1, 2, 3, 4, 5, 6];
-	// fake user IDs
-	const dummyFollowing = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
-	// fake endorsed IDs
-	const dummyEndorsed = [1, 2, 3, 4, 5, 6];
-	// fake review IDs
-	const dummyReviews = [1, 2, 3, 4, 5, 6];
-	//  fake follower usernames - in reality would probably be stored as an ID
-	const dummyFollowers = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
+	// // fake liked IDs
+	// const dummyLiked = [1, 2, 3, 4, 5, 6];
+	// // fake user IDs
+	// const dummyFollowing = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
+	// // fake endorsed IDs
+	// const dummyEndorsed = [1, 2, 3, 4, 5, 6];
+	// // fake review IDs
+	// const dummyReviews = [1, 2, 3, 4, 5, 6];
+	// //  fake follower usernames - in reality would probably be stored as an ID
+	// const dummyFollowers = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
 
 	// do some check to see if this is the user's profile and if the profile belongs to a chef
-	const tabsToUse = myChefTabs;
+	const tabsToUse = ourAccount ? loggedInAccount.isChef ? myChefTabs : myUserTabs : otherChefTabs;
 
 	function getTabContent() {
 		let tabToUse = tabsToUse[currentTab];
 		if (tabToUse === "Liked") {
 			return (
 				<div>
-					{dummyLiked.map((id) => (
-						<div key={id}>
+					{[likedArray].map((like) => (
+						<div key={like.recipeId}>
 							<hr className="w-full" />
-							<LikedRecipeCard recipeId={id} likedDate={id} />
+							<LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt.default} />
 						</div>
 					))}
 				</div>
@@ -47,7 +74,7 @@ function Profile() {
 		} else if (tabToUse === "Following") {
 			return (
 				<div className="pb-2">
-					{dummyFollowing.map((username, ind) => (
+					{profile.following?.map((username, ind) => (
 						<Link to={`/profile/${username}`}>
 							<div
 								key={username}
@@ -61,24 +88,13 @@ function Profile() {
 					))}
 				</div>
 			);
-		} else if (tabToUse === "Endorsed") {
-			return (
-				<div>
-					{dummyEndorsed.map((id) => (
-						<div key={id}>
-							<hr className="w-full" />
-							{/* <EndorsedRecipeCard recipeId={id} likedDate={id} /> */}
-						</div>
-					))}
-				</div>
-			);
 		} else if (tabToUse === "Reviews") {
 			return (
 				<div>
-					{dummyReviews.map((id) => (
-						<div key={id}>
+					{reviewArray.map((review) => (
+						<div key={review._id}>
 							<hr className="w-full" />
-							<RecipeReviewCard reviewId={id} />
+							<RecipeReviewCard reviewId={review._id} />
 						</div>
 					))}
 				</div>
@@ -86,7 +102,7 @@ function Profile() {
 		} else if (tabToUse === "Followers") {
 			return (
 				<div className="pb-2">
-					{dummyFollowers.map((username, ind) => (
+					{profile.followers?.map((username, ind) => (
 						<div
 							key={username}
 							className={`py-2 ${ind === 0 && "pt-0"}`}>
@@ -105,9 +121,9 @@ function Profile() {
 		<div className="m-6 w-full">
 			<div className="flex w-full flex-wrap justify-between wd-top">
 				<div className="">
-					<div className="wd-sub-title">@{dummyUsername}</div>
+					<div className="wd-sub-title">@{profile.username}</div>
 
-					<div className="ml-2 mt-2">{dummyName}</div>
+					<div className="ml-2 mt-2">{profile.first + ' ' + profile.last}</div>
 				</div>
 				{/* only show if this is the current user's account */}
 				<div className="wd-profile-btn-bar">
