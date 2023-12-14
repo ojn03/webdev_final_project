@@ -36,7 +36,7 @@ function Signup() {
 			const currentUser = await client.signup(userObject);
 			navigate("/profile");
 		} catch (error) {
-			setError(error.toString())
+			setError(error.message)
 		}
 	};
 
@@ -46,7 +46,7 @@ function Signup() {
 				<h1 className="wd-title mt-6 self-center">Create an Account</h1>
 				{error && (
 					<span className="text-red-500 text-sm self-center">
-						{error.message}
+						{error}
 					</span>
 				)}
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
