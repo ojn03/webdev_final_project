@@ -29,7 +29,6 @@ function NavBar() {
 	const links = ["home", "search", (account ? "profile" : "login")];
 	const icons = [<MdHomeFilled />, <FiSearch />, <FaUserCircle />];
 	const { pathname } = useLocation();
-	console.log(pathname);
 
 	return (
 		<div className="flex min-[600px]:flex-col max-[600px]:flex-row p-2 justify-start items-center wd-nav-bar">

@@ -66,7 +66,7 @@ function Profile() {
 					{[likedArray].map((like) => (
 						<div key={like.recipeId}>
 							<hr className="w-full" />
-							<LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt.default} />
+							<LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} />
 						</div>
 					))}
 				</div>
