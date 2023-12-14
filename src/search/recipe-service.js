@@ -3,7 +3,7 @@ import axios from "axios";
 const KEY = process.env.REACT_APP_RECIPE_API_KEY;
 const RECIPE_API = "https://api.edamam.com/api/recipes/v2";
 const NAPSTER_IMAGE_URL = "https://api.napster.com/imageserver/v2";
-const APP_ID = '83c6cb3e';
+const APP_ID = process.env.REACT_APP_RECIPE_APP_ID || '83c6cb3e';
 export const albumImageUrl = (album) =>
     `${NAPSTER_IMAGE_URL}/albums/${album.id}
 /images/300x300.jpg`;

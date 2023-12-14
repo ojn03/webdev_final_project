@@ -11,7 +11,7 @@ import { fetchRecipeById } from "../search/recipe-service";
 
 function RecipeCard({ recipeId }) {
 
-
+    console.log(recipeId);
 	const [recipe, setRecipe] = useState(null);
 	const [reviews, setReviews] = useState(null);
 	const [likes, setLikes] = useState(null);
@@ -50,7 +50,7 @@ function RecipeCard({ recipeId }) {
 	// }, [recipe])
 
 	return (<>
-		{recipe && reviews && likes && <Link to={`/recipe/${recipe.id}`}>
+		{recipe && reviews && likes && <Link to={`/recipe/${recipeId}`}>
 			<div className="container wd-card my-0 p-0">
 				<div
 					id="wd-card-title"
