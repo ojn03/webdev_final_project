@@ -27,7 +27,8 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 
 	const addReview = async () => {
 		// add a new review using the current user logged in and the value of currReview
-		await client.createComment({ text: currReview, authorId: account.id, recipeId: recipeId });
+		console.log("addReview", currReview);
+		await client.createComment({ text: currReview, authorId: account._id, recipeId: recipeId });
 		document.getElementById("enter-review-box").value = "";
 		setCurrReview("");
 		fetchReviews();
@@ -55,7 +56,10 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 						rows={4}
 						className="w-full wd-leave-review ring-0 p-2"
 						onChange={(e) =>
-							setCurrReview(e.targetValue ? e.targetValue : "")
+							
+							setCurrReview(e.target.value)
+						
+							
 						}></textarea>
 					<div className="float-right wd-btn-bar">
 						<button
@@ -67,7 +71,7 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 					{/* end chef-only area */}
 
 					{/* map through reviews */}
-					{reviews.map((review) => <ReviewNoRecipeCard reviewId={review.id} key={review.id} />)}
+					{reviews && reviews.map((review) => <ReviewNoRecipeCard reviewId={review._id} key={review._id} />)}
 				</div>
 			</div>
 		</div>
