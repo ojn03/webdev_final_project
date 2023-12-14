@@ -7,8 +7,10 @@ import * as client from "../client.js";
 
 function Home() {
 	const [account, setAccount] = useState(null);
+
   const [reviews, setReviews] = useState(null);
   const [likes, setLikes] = useState(null);
+
 
 	const fetchAccount = async () => {
 		try {
@@ -27,10 +29,12 @@ function Home() {
       following.forEach(user => { reviews.push(fetchReviewsFromUser(user)) });
       reviews.sort((a,b) => {return new Date(b.createdAt) - new Date(a.createdAt);})
       setReviews(reviews);
+
 		}
 		catch (error) {
 			console.log(error);
 		}
+
   }
 
   const fetchReviewsFromUser = async (user) => {
@@ -59,14 +63,18 @@ function Home() {
 		}
   }
 
+
 	useEffect(() => {
 		fetchAccount();
+		// fetchLikedRecipes();
 	}, []);
+
 
   useEffect(() => {
     account ? fetchAllReviews() : fetchAllLikes();
     console.log(likes);
   }, [account])
+
 
 	return (
 		<div className="w-full mx-auto !mb-6">
@@ -75,6 +83,7 @@ function Home() {
       
       
 			{/* {account && <>
+				{likedRecipes.map}
 				<LikedRecipeCard recipeId="" />
 				<RecipeReviewCard reviewId="" />
 			</>} */}

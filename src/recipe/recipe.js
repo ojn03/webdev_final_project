@@ -18,6 +18,15 @@ function Recipe() {
 	const [recipe, setRecipe] = useState(undefined);
 	const [signinPopup, setSigninPopup] = useState(false);
 
+	useEffect(() => {
+		fetchAccount();
+	}, []);
+
+	useEffect(() => {
+		fetchLikes();
+		fetchReviews();
+	}, [account]);
+
 	const openReviews = () => {
 		let signedin = account !== null;
 		if (!signedin) {
@@ -36,8 +45,7 @@ function Recipe() {
 		try {
 			const account = await client.account();
 			setAccount(account);
-		}
-		catch (error) {
+		} catch (error) {
 			console.log(error);
 		}
 	};
@@ -46,44 +54,54 @@ function Recipe() {
 		try {
 			const likes = await client.findLikesByRecipeId(recipeId);
 			setLikes(likes);
-		}
-		catch (error) {
+
+			try {
+				const liked = likes.some((like) => like.authorId === account?._id);
+				setLiked(liked);
+			} catch (error) {
+				console.log(error);
+			}
+		} catch (error) {
 			if (error.status !== 404) {
 				console.log(error);
 			}
 		}
 	};
 
+	// const fetchLiked = async () => {
+	// 	try {
+	// 		const liked = likes.some((like) => like.authorId === account?._id);
+	// 	} catch (error) {
+	// 		console.log(error);
+	// 	}
+	// };
+
 	const fetchReviews = async () => {
 		try {
-			const likes = await client.findCommentsByRecipeId(recipeId);
-			setReviews(likes);
-		}
-		catch (error) {
-			if (error.status !== 404) {
-				console.log(error);
-			}
+			const comments = await client.findCommentsByRecipeId(recipeId);
+			setReviews(comments);
+		} catch (error) {
+			console.log(error);
 		}
 	};
 
 	const handleLiked = async () => {
 		// if not signed in:
-		let signedin = account !== null;
-		if (!signedin) {
+		if (!account) {
 			setSigninPopup(true);
 		} else {
-			await client.createLike({ authorId: account._id, recipeId: recipeId });
+			const like = { authorId: account._id, recipeId };
+
+			if (liked) {
+				await client.deleteLike(like);
+			} else {
+				await client.createLike(like);
+			}
 			setLiked(!liked);
-			let likes = await client.findLikesByRecipeId(recipeId);
+			const likes = await client.findLikesByRecipeId(recipeId);
 			setLikes(likes);
 		}
 	};
-
-	useEffect(() => {
-		fetchAccount();
-		fetchLikes();
-		fetchReviews();
-	}, []);
 
 	useEffect(() => {
 		fetchRecipeById(recipeId).then((recipe) => {
@@ -99,19 +117,15 @@ function Recipe() {
 		<div className="w-full p-0 m-0">
 			<div>
 				{seeReviews && (
-					<RecipeReviewList
-						recipeId={recipeId}
-						closeFunc={closeReviews}
-					/>
+					<RecipeReviewList recipeId={recipeId} closeFunc={closeReviews} />
 				)}
 			</div>
-			<div>
-				{signinPopup && <SigninPromptPopup onClose={setSigninPopup} />}
-			</div>
+			<div>{signinPopup && <SigninPromptPopup onClose={setSigninPopup} />}</div>
 			<img
 				className="wd-recipe-header"
 				alt={recipe.label}
-				src={recipe.image}></img>
+				src={recipe.image}
+			></img>
 			<div className="m-8">
 				<h1 className="wd-title">{recipe.label}</h1>
 
@@ -119,17 +133,20 @@ function Recipe() {
 					<span className="wd-inline-stats">
 						<div
 							className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
-							onClick={() => handleLiked()}>
+							onClick={() => account && handleLiked()}
+						>
 							{liked ? <FaHeart /> : <FaRegHeart />}
-						</div>{" "}
+						</div>
 						<p>{likes ? likes.length : "0"} likes</p>
 					</span>
+
 					<span
 						className="wd-inline-stats hover:text-stone-400 hover:cursor-pointer"
-						onClick={() => openReviews()}>
+						onClick={() => openReviews()}
+					>
 						<div className="wd-inline-stats">
 							<FaRegComment />
-						</div>{" "}
+						</div>
 						<p>{reviews ? reviews.length : "0"} reviews</p>
 					</span>
 				</div>
@@ -138,15 +155,15 @@ function Recipe() {
 					<h2 className="wd-sub-title text-stone-500">Ingredients</h2>
 					<ul className="list-disc ml-5 mt-3">
 						{recipe.ingredientLines.map((ingr, index) => (
-							<li className="pl-1 mb-2" key={index + 1}>{ingr}</li>
+							<li className="pl-1 mb-2" key={index + 1}>
+								{ingr}
+							</li>
 						))}
 					</ul>
 				</div>
 				{recipe.instructionLines.length !== 0 ? (
 					<div className="my-3 mt-6">
-						<h2 className="wd-sub-title text-stone-500">
-							Instructions
-						</h2>
+						<h2 className="wd-sub-title text-stone-500">Instructions</h2>
 						<ul className="list-disc ml-5 mt-3 !pb-6">
 							{recipe.instructionLines.map((step, index) => (
 								<li className="pl-1 mb-2" key={index + 1}>

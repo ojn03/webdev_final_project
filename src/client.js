@@ -30,8 +30,8 @@ export const createLike = async (like) => {
 	return response.data;
 };
 
-export const deleteLike = async (id) => {
-	const response = await request.delete(`${LIKES_API}/${id}`);
+export const deleteLike = async (like) => {
+	const response = await request.delete(`${LIKES_API}`,{data: like});
 	return response.data;
 };
 export const deleteLikeByRecipeId = async (recipeId) => {
@@ -121,8 +121,14 @@ export const findUserById = async (id) => {
 };
 
 export const updateUser = async (user) => {
-	const response = await request.put(`${USERS_API}/${user._id}`, user);
-	return response.data;
+	if (user.type === "chef") {
+		const response = await request.put(`${USERS_API}/chef/${user.id}`, user);
+		return response.data;
+	}
+	else {
+		const response = await request.put(`${USERS_API}/basicUser/${user.id}`, user);
+		return response.data;
+	}
 };
 
 export const deleteUser = async (id) => {
