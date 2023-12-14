@@ -33,7 +33,7 @@ function Signup() {
 				...(isChef && { restaurant: restaurant }),
 				type: isChef ? "chef" : "basic"
 			}
-			const currentUser = await client.signup(userObject);
+			await client.signup(userObject);
 			navigate("/profile");
 		} catch (error) {
 			console.log(error)

@@ -132,10 +132,24 @@ export const deleteUser = async (id) => {
 
 export const signup = async (credentials) => {
 	const response = await request.post(`${USERS_API}/signup`, credentials);
+	if (response.status >= 400) {
+		// Check if the response has a data property
+		const responseData = response.data || {};
+
+		// Handle the error condition using both status code and response data
+		throw new Error(`Request failed with status ${response.status}. Response data: ${JSON.stringify(responseData)}`);
+	}
 	return response.data;
 };
 export const signin = async (credentials) => {
 	const response = await request.post(`${USERS_API}/signin`, credentials);
+	if (response.status >= 400) {
+		// Check if the response has a data property
+		const responseData = response.data || {};
+
+		// Handle the error condition using both status code and response data
+		throw new Error(`Request failed with status ${response.status}. Response data: ${JSON.stringify(responseData)}`);
+	}
 	return response.data;
 };
 export const signout = async () => {

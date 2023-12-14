@@ -11,7 +11,7 @@ function Login() {
 	const navigate = useNavigate();
 	const signIn = async () => {
 		try {
-			const currentUser = await client.signin({ username: username, password: password });
+			await client.signin({ username: username, password: password });
 			navigate("/profile");
 		} catch (error) {
 			setError(error);
