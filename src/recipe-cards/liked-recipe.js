@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa6";
 import * as client from "../client.js";
 import { fetchRecipeById } from "../search/recipe-service";
+import { getRecipeIdFromUri } from "../search/recipe_preview.js";
 
 function LikedRecipeCard({ likeId }) {
 
@@ -23,9 +24,10 @@ function LikedRecipeCard({ likeId }) {
 		setLike(tempLike);
 		const tempRecipe = await fetchRecipeById(tempLike.recipeId);
 		setRecipe(tempRecipe);
-		const tempReviews = await client.findCommentsByRecipeId(tempRecipe.id);
+		const recipeId = getRecipeIdFromUri(tempRecipe.uri)
+		const tempReviews = await client.findCommentsByRecipeId(recipeId);
 		setReviews(tempReviews);
-		const tempLikes = await client.findLikesByRecipeId(tempRecipe.id);
+		const tempLikes = await client.findLikesByRecipeId(recipeId);
 		setLikes(tempLikes);
 	}
 
@@ -49,7 +51,7 @@ function LikedRecipeCard({ likeId }) {
 	}, []);
 
 	return (<>
-		{like && recipe && reviews && likes && <Link to={`/recipe/${recipe.id}`}>
+		{like && recipe && reviews && likes && <Link to={`/ recipe / ${recipe.id}`}>
 			<div className="container wd-card my-0 p-0">
 				<div
 					id="wd-card-title"

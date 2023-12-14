@@ -6,8 +6,10 @@ import LikedRecipeCard from "../recipe-cards/liked-recipe";
 // import EndorsedRecipeCard from "../recipe-cards/endorsed-recipe";
 import RecipeReviewCard from "../recipe-cards/recipe-review";
 import * as client from "../client.js";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+	const navigate = useNavigate();
 	const [currentTab, setCurrentTab] = useState(0);
 	const [loggedInAccount, setLoggedInAccount] = useState(null);
 	const [profile, setProfile] = useState(null);
@@ -18,11 +20,13 @@ function Profile() {
 	const fetchData = async () => {
 		try {
 			const account = await client.account();
+			if (!account) {
+				navigate("/login");
+				return;
+			}
 			setLoggedInAccount(account);
 			setProfile(await client.findUserById(profileId || account._id));
-
 			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
-
 			setReviewArray(await client.findCommentsByAuthorId(profileId || account._id));
 		}
 		catch (error) {
@@ -38,12 +42,18 @@ function Profile() {
 		return <div>Loading...</div>;
 	}
 
-	// console.log(profile);
-	console.log(likedArray.length);
-	console.log(likedArray);
-	// console.log(reviewArray);
 
 	const ourAccount = !profileId || loggedInAccount?._id === profileId;
+
+	const handleLogOut = async () => {
+		try {
+			await client.signout();
+			navigate("/login")
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
 
 
 
@@ -73,7 +83,8 @@ function Profile() {
 					{likedArray.map((like) => (
 						<div key={like.recipeId}>
 							<hr className="w-full" />
-							<LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} />
+							<LikedRecipeCard likeId={like._id} />
+							{/* <LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} /> */}
 						</div>
 					))}
 				</div>
@@ -135,7 +146,7 @@ function Profile() {
 					<Link to={`/${"profile/edit"}`}>
 						<button className="wd-btn ">Edit</button>
 					</Link>
-					<button className="wd-btn wd-btn-danger">Logout</button>
+					<button className="wd-btn wd-btn-danger" onClick={handleLogOut}>Logout</button>
 				</div> :
 					<div className="w-full flex wd-follow">
 						{/* if not already following */}

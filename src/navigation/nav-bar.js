@@ -26,7 +26,7 @@ function NavBar() {
 		fetchAccount();
 	}, []);
 
-	const links = ["home", "search", (account ? "profile" : "login")];
+	const links = ["home", "search", "profile"];
 	const icons = [<MdHomeFilled />, <FiSearch />, <FaUserCircle />];
 	const { pathname } = useLocation();
 
