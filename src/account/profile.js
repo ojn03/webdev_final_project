@@ -73,7 +73,7 @@ function Profile() {
 	// const dummyFollowers = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
 
 	// do some check to see if this is the user's profile and if the profile belongs to a chef
-	const tabsToUse = ourAccount ? loggedInAccount.isChef ? myChefTabs : myUserTabs : otherChefTabs;
+	const tabsToUse = ourAccount ? loggedInAccount.type === 'Chef' ? myChefTabs : myUserTabs : otherChefTabs;
 
 	function getTabContent() {
 		let tabToUse = tabsToUse[currentTab];
@@ -84,7 +84,6 @@ function Profile() {
 						<div key={like.recipeId}>
 							<hr className="w-full" />
 							<LikedRecipeCard likeId={like._id} />
-							{/* <LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} /> */}
 						</div>
 					))}
 				</div>

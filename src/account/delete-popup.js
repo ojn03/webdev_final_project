@@ -10,6 +10,8 @@ function DeleteAccountPopup({ userId, onClose }) {
 
 	function deleteAccount() {
 		client.signout();
+		client.deleteCommentByAuthorId(userId);
+		client.deleteLikeByAuthorId(userId);
 		client.deleteUser(userId);
 		setConfirm(true);
 	}
