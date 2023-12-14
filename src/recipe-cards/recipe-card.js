@@ -16,13 +16,18 @@ function RecipeCard({ recipeId }) {
 	const [reviews, setReviews] = useState(null);
 	const [likes, setLikes] = useState(null);
 
+	const fetchRecipe = async () => {
+		const tempRecipe = await fetchRecipeById(recipeId);
+		setRecipe(tempRecipe);
+	}
+
 	const fetchAll = async () => {
 
 		const tempRecipe = await fetchRecipeById(recipeId);
 		setRecipe(tempRecipe);
-		const tempReviews = await client.findCommentsByRecipeId(tempRecipe.id);
+		const tempReviews = await client.findCommentsByRecipeId(recipeId);
 		setReviews(tempReviews);
-		const tempLikes = await client.findLikesByRecipeId(tempRecipe.id);
+		const tempLikes = await client.findLikesByRecipeId(recipeId);
 		setLikes(tempLikes);
 	}
 
@@ -37,8 +42,12 @@ function RecipeCard({ recipeId }) {
 	// };
 
 	useEffect(() => {
-		fetchAll();
+		fetchAll()
 	}, []);
+
+	// useEffect(() => {
+	// 	fetchAll();
+	// }, [recipe])
 
 	return (<>
 		{recipe && reviews && likes && <Link to={`/recipe/${recipe.id}`}>
@@ -54,7 +63,7 @@ function RecipeCard({ recipeId }) {
 
 					<div className="bottom-0 max-h-32 flex align-left flex-auto flex-col bg-stone-200 p-2 px-3 rounded-md justify-center text-stone-600">
 						<span className="wd-inline-stats">
-							<FaRegHeart /> <p>{likes ? likes.length : 0} likes</p>
+							<FaRegHeart /> <p>{likes ? likes.length : 5} likes</p>
 						</span>
 
 						<span className="wd-inline-stats">

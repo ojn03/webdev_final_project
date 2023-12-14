@@ -78,16 +78,9 @@ function Home() {
 
 	return (
 		<div className="w-full mx-auto !mb-6">
-			<h1 className="text-black">Home</h1>
-      {account ? reviews.map((review) => <RecipeReviewCard reviewId={review._id}/>) : likes.map((like) => <RecipeCard recipeId={like}/>)}
-      
-      
-			{/* {account && <>
-				{likedRecipes.map}
-				<LikedRecipeCard recipeId="" />
-				<RecipeReviewCard reviewId="" />
-			</>} */}
-			{/* TODO: get list of liked recipes andn reviews from followed chefs, order them from newst to oldest, then display them as either LikedRecipeCards or RecipeReviewCards */}
+			<h1 className="text-black wd-title ml-5 mt-3">Home</h1>
+      {account ? reviews?.map((review) => <RecipeReviewCard reviewId={review._id}/>) : likes?.map((like) => <RecipeCard recipeId={like}/>)}
+
 		</div>
 	);
 }

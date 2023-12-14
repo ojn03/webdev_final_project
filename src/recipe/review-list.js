@@ -51,7 +51,7 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 				<hr className="w-9/10 mx-8 border-stone-400"></hr>
 				<div className="overflow-y-auto wd-review-scroll w-full h-full">
 					{/* if chef, show this so they can leave a review */}
-					<textarea
+					{account && account.type === "Chef" && <div><textarea
 						id="enter-review-box"
 						rows={4}
 						className="w-full wd-leave-review ring-0 p-2"
@@ -67,7 +67,7 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 							onClick={() => addReview()}>
 							Submit
 						</button>
-					</div>
+					</div></div>}
 					{/* end chef-only area */}
 
 					{/* map through reviews */}
