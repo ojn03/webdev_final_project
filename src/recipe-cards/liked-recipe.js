@@ -36,6 +36,7 @@ function LikedRecipeCard({ likeId }) {
 	useEffect(() => {
 		fetchLike();
 		fetchRecipeById(like.recipeId).then((recipe) => {
+			this.recipe = recipe;
 			setRecipe(recipe);
 		});
 		fetchLikes();
