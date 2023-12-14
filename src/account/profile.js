@@ -9,7 +9,6 @@ import * as client from "../client.js";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
-
 	const navigate = useNavigate();
 	const [currentTab, setCurrentTab] = useState(0);
 	const [loggedInAccount, setLoggedInAccount] = useState(null);
@@ -22,14 +21,16 @@ function Profile() {
 		try {
 			const account = await client.account();
 
-			if(!account && !profileId) {
+			if (!account && !profileId) {
 				navigate("/login");
 				return;
 			}
 
 			setLoggedInAccount(account);
 			setProfile(await client.findUserById(profileId || account._id));
-			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
+			setLikedArray(
+				await client.findLikesByAuthorId(profileId || account._id)
+			);
 			setReviewArray(
 				await client.findCommentsByAuthorId(profileId || account._id)
 			);
@@ -38,9 +39,22 @@ function Profile() {
 		}
 	};
 
+	const fetchContent = async () => {
+		setLikedArray(
+			await client.findLikesByAuthorId(profileId || loggedInAccount._id)
+		);
+		setReviewArray(
+			await client.findCommentsByAuthorId(profileId || loggedInAccount._id)
+		);
+	};
+
 	useEffect(() => {
 		fetchData();
 	}, []);
+
+	useEffect(() => {
+		profileId && fetchContent();
+	}, [profile]);
 
 	if (!loggedInAccount || !profile || !likedArray || !reviewArray) {
 		return <div>Loading...</div>;
@@ -85,7 +99,9 @@ function Profile() {
 				<div className="pb-2">
 					{profile.following?.map((username, ind) => (
 						<Link to={`/profile/${username}`}>
-							<div key={username} className={`py-2 ${ind === 0 && "pt-0"}`}>
+							<div
+								key={username}
+								className={`py-2 ${ind === 0 && "pt-0"}`}>
 								<hr className="w-full py-2" />
 								<span className="m-2 text-stone-600 hover:text-stone-400">
 									@{username}
@@ -110,9 +126,13 @@ function Profile() {
 			return (
 				<div className="pb-2">
 					{profile.followers?.map((username, ind) => (
-						<div key={username} className={`py-2 ${ind === 0 && "pt-0"}`}>
+						<div
+							key={username}
+							className={`py-2 ${ind === 0 && "pt-0"}`}>
 							<hr className="w-full py-2" />
-							<span className="m-2 text-stone-600">@{username}</span>
+							<span className="m-2 text-stone-600">
+								@{username}
+							</span>
 						</div>
 					))}
 				</div>
@@ -125,14 +145,18 @@ function Profile() {
 			<div className="flex w-full flex-wrap justify-between wd-top">
 				<div className="">
 					<div className="wd-sub-title">@{profile.username}</div>
-					<div className="ml-2 mt-2">{profile.first + " " + profile.last}</div>
+					<div className="ml-2 mt-2">
+						{profile.first + " " + profile.last}
+					</div>
 				</div>
 				{ourAccount ? (
 					<div className="wd-profile-btn-bar">
 						<Link to={`/${"profile/edit"}`}>
 							<button className="wd-btn ">Edit</button>
 						</Link>
-						<button className="wd-btn wd-btn-danger" onClick={handleLogOut}>
+						<button
+							className="wd-btn wd-btn-danger"
+							onClick={handleLogOut}>
 							Logout
 						</button>
 					</div>
@@ -140,7 +164,9 @@ function Profile() {
 					<div className="w-full flex wd-follow">
 						{/* if not already following */}
 						{loggedInAccount.following.includes(profile._id) ? (
-							<button className="wd-btn wd-btn-danger w-24">Unfollow</button>
+							<button className="wd-btn wd-btn-danger w-24">
+								Unfollow
+							</button>
 						) : (
 							<button className="wd-btn w-24">Follow</button>
 						)}
@@ -159,8 +185,7 @@ function Profile() {
 								className={`wd-prof-tab flex-grow hover:cursor-pointer p-2 wd-sub-heading text-stone-600 ${
 									currentTab === ind && "wd-active"
 								}`}
-								onClick={() => setCurrentTab(ind)}
-							>
+								onClick={() => setCurrentTab(ind)}>
 								{tab}
 							</div>
 						))}
@@ -170,6 +195,5 @@ function Profile() {
 			</div>
 		</div>
 	);
-
 }
 export default Profile;
