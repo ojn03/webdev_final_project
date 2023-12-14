@@ -14,7 +14,12 @@ function Login() {
 			await client.signin({ username: username, password: password });
 			navigate("/profile");
 		} catch (error) {
-			setError(error.message);
+			if (error.data?.message === 'Invalid credentials') {
+				setError('Invalid username or password');
+			}
+			else {
+				setError(error.message + error.data);
+			}
 		}
 	};
 

@@ -42,8 +42,8 @@ function LikedRecipeCard({ likeId }) {
 		fetchReviews();
 	}, []);
 
-	return (
-		<Link to={`/recipe/${recipe.id}`}>
+	return (<>
+		{like && recipe && reviews && likes && <Link to={`/recipe/${recipe.id}`}>
 			<div className="container wd-card my-0 p-0">
 				<div
 					id="wd-card-title"
@@ -73,7 +73,7 @@ function LikedRecipeCard({ likeId }) {
 					<img src={recipe.image} alt={recipe.label}></img>
 				</div>
 			</div>
-		</Link>
+		</Link>} </>
 	);
 }
 export default LikedRecipeCard;
