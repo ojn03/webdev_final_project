@@ -23,9 +23,10 @@ function Profile() {
 			setLoggedInAccount(account);
 			setProfile(await client.findUserById(profileId || account._id));
 			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
-			setReviewArray(await client.findCommentsByAuthorId(profileId || account._id));
-		}
-		catch (error) {
+			setReviewArray(
+				await client.findCommentsByAuthorId(profileId || account._id)
+			);
+		} catch (error) {
 			console.log(error);
 		}
 	};
@@ -38,38 +39,26 @@ function Profile() {
 		return <div>Loading...</div>;
 	}
 
-
 	const ourAccount = !profileId || loggedInAccount?._id === profileId;
 
 	const handleLogOut = async () => {
 		try {
 			await client.signout();
-			navigate("/login")
-		}
-		catch (error) {
+			navigate("/login");
+		} catch (error) {
 			console.log(error);
 		}
-	}
-
-
+	};
 
 	const myUserTabs = ["Liked", "Following"];
 	const myChefTabs = ["Liked", "Reviews", "Following", "Followers"];
 	const otherChefTabs = ["Liked", "Reviews", "Following"];
 
-	// // fake liked IDs
-	// const dummyLiked = [1, 2, 3, 4, 5, 6];
-	// // fake user IDs
-	// const dummyFollowing = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
-	// // fake endorsed IDs
-	// const dummyEndorsed = [1, 2, 3, 4, 5, 6];
-	// // fake review IDs
-	// const dummyReviews = [1, 2, 3, 4, 5, 6];
-	// //  fake follower usernames - in reality would probably be stored as an ID
-	// const dummyFollowers = ["Carl_The_boss", "no-burnt-food", "best-chef-ever"];
-
-	// do some check to see if this is the user's profile and if the profile belongs to a chef
-	const tabsToUse = ourAccount ? loggedInAccount.type === 'Chef' ? myChefTabs : myUserTabs : otherChefTabs;
+	const tabsToUse = ourAccount
+		? loggedInAccount.type === "Chef"
+			? myChefTabs
+			: myUserTabs
+		: otherChefTabs;
 
 	function getTabContent() {
 		let tabToUse = tabsToUse[currentTab];
@@ -89,9 +78,7 @@ function Profile() {
 				<div className="pb-2">
 					{profile.following?.map((username, ind) => (
 						<Link to={`/profile/${username}`}>
-							<div
-								key={username}
-								className={`py-2 ${ind === 0 && "pt-0"}`}>
+							<div key={username} className={`py-2 ${ind === 0 && "pt-0"}`}>
 								<hr className="w-full py-2" />
 								<span className="m-2 text-stone-600 hover:text-stone-400">
 									@{username}
@@ -116,13 +103,9 @@ function Profile() {
 			return (
 				<div className="pb-2">
 					{profile.followers?.map((username, ind) => (
-						<div
-							key={username}
-							className={`py-2 ${ind === 0 && "pt-0"}`}>
+						<div key={username} className={`py-2 ${ind === 0 && "pt-0"}`}>
 							<hr className="w-full py-2" />
-							<span className="m-2 text-stone-600">
-								@{username}
-							</span>
+							<span className="m-2 text-stone-600">@{username}</span>
 						</div>
 					))}
 				</div>
@@ -135,23 +118,27 @@ function Profile() {
 			<div className="flex w-full flex-wrap justify-between wd-top">
 				<div className="">
 					<div className="wd-sub-title">@{profile.username}</div>
-					<div className="ml-2 mt-2">{profile.first + ' ' + profile.last}</div>
+					<div className="ml-2 mt-2">{profile.first + " " + profile.last}</div>
 				</div>
-				{ourAccount ? <div className="wd-profile-btn-bar">
-					<Link to={`/${"profile/edit"}`}>
-						<button className="wd-btn ">Edit</button>
-					</Link>
-					<button className="wd-btn wd-btn-danger" onClick={handleLogOut}>Logout</button>
-				</div> :
+				{ourAccount ? (
+					<div className="wd-profile-btn-bar">
+						<Link to={`/${"profile/edit"}`}>
+							<button className="wd-btn ">Edit</button>
+						</Link>
+						<button className="wd-btn wd-btn-danger" onClick={handleLogOut}>
+							Logout
+						</button>
+					</div>
+				) : (
 					<div className="w-full flex wd-follow">
 						{/* if not already following */}
-						<button className="wd-btn w-24">Follow</button>
-
-						{/* if already following */}
-						<button className="wd-btn wd-btn-danger w-24">
-							Unfollow
-						</button>
-					</div>}
+						{loggedInAccount.following.includes(profile._id) ? (
+							<button className="wd-btn wd-btn-danger w-24">Unfollow</button>
+						) : (
+							<button className="wd-btn w-24">Follow</button>
+						)}
+					</div>
+				)}
 			</div>
 
 			<div className="flex w-full flex-wrap justify-center">
@@ -162,9 +149,11 @@ function Profile() {
 						{tabsToUse.map((tab, ind) => (
 							<div
 								key={ind}
-								className={`wd-prof-tab flex-grow hover:cursor-pointer p-2 wd-sub-heading text-stone-600 ${currentTab === ind && "wd-active"
-									}`}
-								onClick={() => setCurrentTab(ind)}>
+								className={`wd-prof-tab flex-grow hover:cursor-pointer p-2 wd-sub-heading text-stone-600 ${
+									currentTab === ind && "wd-active"
+								}`}
+								onClick={() => setCurrentTab(ind)}
+							>
 								{tab}
 							</div>
 						))}
