@@ -33,8 +33,13 @@ function Recipe() {
 	};
 
 	const fetchAccount = async () => {
-		const account = await client.account();
-		setAccount(account);
+		try {
+			const account = await client.account();
+			setAccount(account);
+		}
+		catch (error) {
+			console.log(error);
+		}
 	};
 
 	const fetchLikes = async () => {

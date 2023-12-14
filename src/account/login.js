@@ -14,7 +14,7 @@ function Login() {
 			await client.signin({ username: username, password: password });
 			navigate("/profile");
 		} catch (error) {
-			setError(error);
+			setError(error.message);
 		}
 	};
 
