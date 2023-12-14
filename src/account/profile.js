@@ -10,12 +10,20 @@ import * as client from "../client.js";
 function Profile() {
 	const [currentTab, setCurrentTab] = useState(0);
 	const [loggedInAccount, setLoggedInAccount] = useState(null);
+	const [profile, setProfile] = useState(null);
+	const [likedArray, setLikedArray] = useState(null);
+	const [reviewArray, setReviewArray] = useState(null);
 	const { id: profileId } = useParams();
 
-	const fetchAccount = async () => {
+	const fetchData = async () => {
 		try {
 			const account = await client.account();
 			setLoggedInAccount(account);
+			setProfile(await client.findUserById(profileId || account._id));
+
+			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
+
+			setReviewArray(await client.findCommentsByAuthorId(profileId || account._id));
 		}
 		catch (error) {
 			console.log(error);
@@ -23,18 +31,17 @@ function Profile() {
 	};
 
 	useEffect(() => {
-		fetchAccount();
+		fetchData();
 	}, []);
-
-	const profile = client.findUserById(profileId);
-
-	const likedArray = client.findLikesByAuthorId(profileId);
-
-	const reviewArray = client.findCommentsByAuthorId(profileId);
 
 	if (!loggedInAccount || !profile || !likedArray || !reviewArray) {
 		return <div>Loading...</div>;
 	}
+
+	// console.log(profile);
+	console.log(likedArray.length);
+	console.log(likedArray);
+	// console.log(reviewArray);
 
 	const ourAccount = !profileId || loggedInAccount?._id === profileId;
 
@@ -63,7 +70,7 @@ function Profile() {
 		if (tabToUse === "Liked") {
 			return (
 				<div>
-					{[likedArray].map((like) => (
+					{likedArray.map((like) => (
 						<div key={like.recipeId}>
 							<hr className="w-full" />
 							<LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} />
@@ -122,32 +129,29 @@ function Profile() {
 			<div className="flex w-full flex-wrap justify-between wd-top">
 				<div className="">
 					<div className="wd-sub-title">@{profile.username}</div>
-
 					<div className="ml-2 mt-2">{profile.first + ' ' + profile.last}</div>
 				</div>
-				{/* only show if this is the current user's account */}
-				<div className="wd-profile-btn-bar">
+				{ourAccount ? <div className="wd-profile-btn-bar">
 					<Link to={`/${"profile/edit"}`}>
 						<button className="wd-btn ">Edit</button>
 					</Link>
 					<button className="wd-btn wd-btn-danger">Logout</button>
-				</div>
+				</div> :
+					<div className="w-full flex wd-follow">
+						{/* if not already following */}
+						<button className="wd-btn w-24">Follow</button>
 
-				{/* onlh show if this is not the current user's account */}
-				<div className="w-full flex wd-follow">
-					{/* if not already following */}
-					<button className="wd-btn w-24">Follow</button>
-
-					{/* if already following */}
-					<button className="wd-btn wd-btn-danger w-24">
-						Unfollow
-					</button>
-				</div>
+						{/* if already following */}
+						<button className="wd-btn wd-btn-danger w-24">
+							Unfollow
+						</button>
+					</div>}
 			</div>
 
 			<div className="flex w-full flex-wrap justify-center">
 				<div className="wd-prof-content">
 					{/* if chef's account and not user's account */}
+					{/* I have no idea what you mean by this ^  */}
 					<div className="flex w-full flex-nowrap justify-between wd-prof-tab-bar">
 						{tabsToUse.map((tab, ind) => (
 							<div
