@@ -14,6 +14,8 @@ function Signup() {
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [error, setError] = useState("");
 	const [isChef, setIsChef] = useState(false);
+	const [experienceLevel, setExperienceLevel] = useState('');
+	const [restaurant, setRestaurant] = useState('');
 	const navigate = useNavigate();
 
 	const handleClick = async () => {
@@ -27,6 +29,8 @@ function Signup() {
 				last: lastName,
 				username: username,
 				password: password,
+				...(!isChef && { experienceLevel: experienceLevel }),
+				...(isChef && { restaurant: restaurant }),
 				type: isChef ? "chef" : "basic"
 			}
 			const currentUser = await client.signup(userObject);
@@ -42,7 +46,7 @@ function Signup() {
 				<h1 className="wd-title mt-6 self-center">Create an Account</h1>
 				{error && (
 					<span className="text-red-500 text-sm self-center">
-						{error}
+						{error && <p>{error.message}</p>}
 					</span>
 				)}
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
@@ -94,6 +98,28 @@ function Signup() {
 					<option value="normal">Home Cook</option>
 					<option value="chef">Professional Chef</option>
 				</select>
+				{isChef ?
+					<>
+						<span className="ml-1 wd-sub-sub-title text-stone-700">
+							Experience Level
+						</span>
+						<select id="experience" className="wd-dropdown" value={experienceLevel} onChange={(event) => setExperienceLevel(event.target.value)}>;
+							<option value="">Select</option>
+							<option value="1">Level 1</option>
+							<option value="2">Level 2</option>
+							<option value="3">Level 3</option>
+							<option value="4">Level 4</option>
+							<option value="5">Level 5</option>
+						</select> </> : <>
+						<span className="ml-1 wd-sub-sub-title text-stone-700">
+							Restaurant Name
+						</span>
+						<input
+							type={"restaurant"}
+							placeholder="Restaurant Name"
+							className="wd-input-small m-2"
+							onChange={(e) => setRestaurant(e.target.value)}></input>
+					</>}
 				<br className="m-5"></br>
 
 				{/* if successful, route to profile. Otherwise, stay on some page */}
@@ -112,7 +138,7 @@ function Signup() {
 					</Link>
 				</span>
 			</div>
-		</div>
+		</div >
 	);
 }
 export default Signup;
