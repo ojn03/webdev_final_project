@@ -28,8 +28,7 @@ function Recipe() {
 	}, [account]);
 
 	const openReviews = () => {
-		let signedin = account !== null;
-		if (!signedin) {
+		if (!account) {
 			setSigninPopup(true);
 		} else {
 			setSeeReviews(true);
@@ -81,7 +80,7 @@ function Recipe() {
 			const comments = await client.findCommentsByRecipeId(recipeId);
 			setReviews(comments);
 		} catch (error) {
-			console.log(error);
+			console.log("error", error);
 		}
 	};
 
