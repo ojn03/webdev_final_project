@@ -1,12 +1,13 @@
 import { React, useState, useEffect } from "react";
 import "../styles/global-styles.css";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DeleteAccountPopup from "./delete-popup";
 import * as client from "../client";
 
 function EditProfile() {
 	// should actually be setting the state using the user's data in the db
 	// except password, they should not be allowed to see the inital value for security
+	const navigate = useNavigate();
 	const [account, setAccount] = useState(null);
 
 	const [firstName, setFirstName] = useState("");
@@ -25,6 +26,16 @@ function EditProfile() {
 		try {
 			const account = await client.account();
 			setAccount(account);
+			setFirstName(account.first);
+			console.log(account.first)
+			setLastName(account.last);
+			setUsername(account.username);
+			setIsChef(account.type === "Chef");
+			if (account.type === "Chef") {
+				setRestaurant(account.restaurant);
+			} else {
+				setExperience(account.experience);
+			}
 		}
 		catch (error) {
 			console.log(error);
@@ -33,28 +44,21 @@ function EditProfile() {
 
 	useEffect(() => {
 		fetchAccount();
-		setFirstName(account.first);
-		setLastName(account.last);
-		setUsername(account.username);
-		setIsChef(account.type === "chef");
-		if (account.type === "chef") {
-			setRestaurant(account.restaurant);
-		} else {
-			setExperience(account.experience);
-		}
-	}, [account.experience, account.first, account.last, account.restaurant, account.type, account.username]);
+	}, []);
 
 
 	const update = async () => {
 		try {
 			if (password && password !== account.password) {
 				setError("Incorrect password");
+				return;
 			}
 			if (newPassword && newPassword !== passwordConfirm) {
 				setError("Passwords do not match");
 				return;
 			}
 			const userObject = {
+				id: account._id,
 				first: firstName,
 				last: lastName,
 				username: username,
@@ -64,6 +68,8 @@ function EditProfile() {
 				type: isChef ? "chef" : "basic"
 			}
 			await client.updateUser(userObject);
+			await client.signin({ username: userObject.username, password: userObject.password })
+			navigate('/profile')
 		}
 		catch {
 			setError("Failed to update account");
@@ -76,6 +82,7 @@ function EditProfile() {
 	if (!account) {
 		return <div>Loading...</div>;
 	}
+
 
 	return (
 		<div className={"flex w-full justify-center"}>
@@ -96,6 +103,7 @@ function EditProfile() {
 					type={"text"}
 					placeholder="First Name"
 					className="wd-input-small m-2"
+					value={firstName}
 					onChange={(e) => setFirstName(e.target.value)}></input>
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					Last Name
@@ -104,6 +112,7 @@ function EditProfile() {
 					type={"text"}
 					placeholder="Last Name"
 					className="wd-input-small m-2"
+					value={lastName}
 					onChange={(e) => setLastName(e.target.value)}></input>
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					Username
@@ -112,6 +121,7 @@ function EditProfile() {
 					type={"text"}
 					placeholder="Username"
 					className="wd-input-small m-2"
+					value={username}
 					onChange={(e) => setUsername(e.target.value)}></input>
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					New Password
@@ -144,7 +154,7 @@ function EditProfile() {
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					User Type
 				</span>
-				<select name="userType" id="userType" className="wd-dropdown" onChange={(e) => setIsChef(e.target.value === "chef")}>
+				<select name="userType" id="userType" className="wd-dropdown" value={isChef ? "chef" : "normal"} onChange={(e) => setIsChef(e.target.value === "chef")}>
 					<option value="normal">Home Cook</option>
 					<option value="chef">Professional Chef</option>
 				</select>
@@ -168,23 +178,22 @@ function EditProfile() {
 							type={"restaurant"}
 							placeholder="Restaurant Name"
 							className="wd-input-small m-2"
+							value={restaurant}
 							onChange={(e) => setRestaurant(e.target.value)}></input>
 					</>}
 
 				<br className="m-5"></br>
-				{error && <p>{error.message}</p>}
+				{error}
 				{/* if successful, route to profile. Otherwise, stay on some page */}
 				<button
 					className="wd-btn wd-btn-success w-60 self-center"
 					onClick={() => update()}>
 					Update
-					{account && <Navigate to="/profile" replace={true} />}
 				</button>
 				<button
 					className="wd-btn w-60 self-center"
-					onClick={() => update()}>
+					onClick={() => navigate("/profile")}>
 					Cancel
-					{account && <Navigate to="/profile" replace={true} />}
 				</button>
 				<button
 					className="wd-btn wd-btn-danger w-60 self-center"

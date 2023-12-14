@@ -121,8 +121,14 @@ export const findUserById = async (id) => {
 };
 
 export const updateUser = async (user) => {
-	const response = await request.put(`${USERS_API}/${user._id}`, user);
-	return response.data;
+	if (user.type === "chef") {
+		const response = await request.put(`${USERS_API}/chef/${user.id}`, user);
+		return response.data;
+	}
+	else {
+		const response = await request.put(`${USERS_API}/basicUser/${user.id}`, user);
+		return response.data;
+	}
 };
 
 export const deleteUser = async (id) => {
