@@ -43,13 +43,27 @@ function Recipe() {
 	};
 
 	const fetchLikes = async () => {
-		const likes = await client.findLikesByRecipeId(recipeId);
-		setLikes(likes);
+		try {
+			const likes = await client.findLikesByRecipeId(recipeId);
+			setLikes(likes);
+		}
+		catch (error) {
+			if (error.status !== 404) {
+				console.log(error);
+			}
+		}
 	};
 
 	const fetchReviews = async () => {
-		const reviews = await client.findCommentsByRecipeId(recipeId);
-		setReviews(reviews);
+		try {
+			const likes = await client.findCommentsByRecipeId(recipeId);
+			setReviews(likes);
+		}
+		catch (error) {
+			if (error.status !== 404) {
+				console.log(error);
+			}
+		}
 	};
 
 	const handleLiked = async () => {
@@ -58,7 +72,7 @@ function Recipe() {
 		if (!signedin) {
 			setSigninPopup(true);
 		} else {
-			await client.createLike({ authorId: account.id, recipeId: recipeId });
+			await client.createLike({ authorId: account._id, recipeId: recipeId });
 			setLiked(!liked);
 			let likes = await client.findLikesByRecipeId(recipeId);
 			setLikes(likes);
@@ -123,8 +137,8 @@ function Recipe() {
 				<div className="my-3 mt-6">
 					<h2 className="wd-sub-title text-stone-500">Ingredients</h2>
 					<ul className="list-disc ml-5 mt-3">
-						{recipe.ingredientLines.map((ingr) => (
-							<li className="pl-1 mb-2">{ingr}</li>
+						{recipe.ingredientLines.map((ingr, index) => (
+							<li className="pl-1 mb-2" key={index + 1}>{ingr}</li>
 						))}
 					</ul>
 				</div>
