@@ -37,7 +37,7 @@ function EditProfile() {
 		} else {
 			setExperience(account.experience);
 		}
-	}, [account.experienceLevel, account.first, account.last, account.restaurant, account.type, account.username]);
+	}, [account.experience, account.first, account.last, account.restaurant, account.type, account.username]);
 
 
 	const update = async () => {
@@ -54,7 +54,7 @@ function EditProfile() {
 				last: lastName,
 				username: username,
 				password: newPassword ? newPassword : account.password,
-				...(!isChef && { experience: experienceLevel }),
+				...(!isChef && { experience: experience }),
 				...(isChef && { restaurant: restaurant }),
 				type: isChef ? "chef" : "basic"
 			}
@@ -148,7 +148,7 @@ function EditProfile() {
 						<span className="ml-1 wd-sub-sub-title text-stone-700">
 							Experience Level
 						</span>
-						<select id="experience" className="wd-dropdown" value={experienceLevel} onChange={(event) => setExperienceLevel(event.target.value)}>;
+						<select id="experience" className="wd-dropdown" value={experience} onChange={(event) => setExperience(event.target.value)}>;
 							<option value="">Select</option>
 							<option value="1">Level 1</option>
 							<option value="2">Level 2</option>
