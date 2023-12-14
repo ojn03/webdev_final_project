@@ -3,7 +3,7 @@ import "../styles/global-styles.css";
 import "./acount-styles.css";
 import { Link } from "react-router-dom";
 import LikedRecipeCard from "../recipe-cards/liked-recipe";
-import EndorsedRecipeCard from "../recipe-cards/endorsed-recipe";
+// import EndorsedRecipeCard from "../recipe-cards/endorsed-recipe";
 import RecipeReviewCard from "../recipe-cards/recipe-review";
 
 function Profile() {
@@ -14,8 +14,8 @@ function Profile() {
 	const [currentTab, setCurrentTab] = useState(0);
 
 	const myUserTabs = ["Liked", "Following"];
-	const myChefTabs = ["Endorsed", "Reviews", "Followers"];
-	const otherChefTabs = ["Endorsed", "Reviews"];
+	const myChefTabs = ["Liked", "Reviews", "Following", "Followers"];
+	const otherChefTabs = ["Liked", "Reviews", "Following"];
 
 	// fake liked IDs
 	const dummyLiked = [1, 2, 3, 4, 5, 6];
@@ -48,7 +48,7 @@ function Profile() {
 			return (
 				<div className="pb-2">
 					{dummyFollowing.map((username, ind) => (
-						<Link to={username}>
+						<Link to={`/profile/${username}`}>
 							<div
 								key={username}
 								className={`py-2 ${ind === 0 && "pt-0"}`}>
@@ -67,13 +67,13 @@ function Profile() {
 					{dummyEndorsed.map((id) => (
 						<div key={id}>
 							<hr className="w-full" />
-							<EndorsedRecipeCard recipeId={id} likedDate={id} />
+							{/* <EndorsedRecipeCard recipeId={id} likedDate={id} /> */}
 						</div>
 					))}
 				</div>
 			);
 		} else if (tabToUse === "Reviews") {
-      return (
+			return (
 				<div>
 					{dummyReviews.map((id) => (
 						<div key={id}>
@@ -84,17 +84,17 @@ function Profile() {
 				</div>
 			);
 		} else if (tabToUse === "Followers") {
-      return (
+			return (
 				<div className="pb-2">
 					{dummyFollowers.map((username, ind) => (
-							<div
-								key={username}
-								className={`py-2 ${ind === 0 && "pt-0"}`}>
-								<hr className="w-full py-2" />
-								<span className="m-2 text-stone-600">
-									@{username}
-								</span>
-							</div>
+						<div
+							key={username}
+							className={`py-2 ${ind === 0 && "pt-0"}`}>
+							<hr className="w-full py-2" />
+							<span className="m-2 text-stone-600">
+								@{username}
+							</span>
+						</div>
 					))}
 				</div>
 			);
@@ -136,9 +136,8 @@ function Profile() {
 						{tabsToUse.map((tab, ind) => (
 							<div
 								key={ind}
-								className={`wd-prof-tab flex-grow hover:cursor-pointer p-2 wd-sub-heading text-stone-600 ${
-									currentTab === ind && "wd-active"
-								}`}
+								className={`wd-prof-tab flex-grow hover:cursor-pointer p-2 wd-sub-heading text-stone-600 ${currentTab === ind && "wd-active"
+									}`}
 								onClick={() => setCurrentTab(ind)}>
 								{tab}
 							</div>

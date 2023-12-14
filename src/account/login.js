@@ -1,18 +1,32 @@
 import { React, useState } from "react";
 import "../styles/global-styles.css";
 import { Link } from "react-router-dom";
+import * as client from "../client";
+import { useNavigate } from "react-router";
 
 function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const signIn = () => {
-		// sign in
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
+	const signIn = async () => {
+		try {
+			const currentUser = await client.signin({ username: username, password: password });
+			navigate("/profile");
+		} catch (error) {
+			setError(error);
+		}
 	};
 
 	return (
 		<div className={"flex w-full justify-center"}>
 			<div className="flex flex-col">
 				<h1 className="wd-title mt-6 self-center">Sign In</h1>
+				{error && (
+					<span className="text-red-500 text-sm self-center">
+						{error}
+					</span>
+				)}
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					Username
 				</span>
@@ -36,7 +50,7 @@ function Login() {
 					onClick={() => signIn()}>
 					Sign In
 				</button>
-				
+
 				<span className="mt-2 self-center mb-4">
 					Don't have an account?{" "}
 					<Link

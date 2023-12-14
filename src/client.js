@@ -164,6 +164,7 @@ export const findFollowing = async (id) => {
 	return response.data;
 };
 
+
 // recipes
 // const recipesbase = `${BASE_API}/api/recipes`;
 
@@ -186,3 +187,5 @@ export const findFollowing = async (id) => {
 // 	const response = await request.delete(`${recipesbase}/${id}`);
 // 	return response.data;
 // };
+
+
