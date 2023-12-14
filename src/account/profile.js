@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import "../styles/global-styles.css";
 import "./acount-styles.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import LikedRecipeCard from "../recipe-cards/liked-recipe";
 // import EndorsedRecipeCard from "../recipe-cards/endorsed-recipe";
 import RecipeReviewCard from "../recipe-cards/recipe-review";
@@ -16,6 +16,12 @@ function Profile() {
 	const [likedArray, setLikedArray] = useState(null);
 	const [reviewArray, setReviewArray] = useState(null);
 	const { id: profileId } = useParams();
+	const [following, setFollowing] = useState(false);
+	const location = useLocation();
+
+	useEffect(() => {
+		fetchData();
+	}, [profileId]);
 
 	const fetchData = async () => {
 		try {
@@ -34,6 +40,8 @@ function Profile() {
 			setReviewArray(
 				await client.findCommentsByAuthorId(profileId || account._id)
 			);
+			setFollowing(loggedInAccount.following.includes(profile._id));
+			console.log(loggedInAccount);
 		} catch (error) {
 			console.log(error);
 		}
@@ -44,8 +52,12 @@ function Profile() {
 			await client.findLikesByAuthorId(profileId || loggedInAccount._id)
 		);
 		setReviewArray(
-			await client.findCommentsByAuthorId(profileId || loggedInAccount._id)
+			await client.findCommentsByAuthorId(
+				profileId || loggedInAccount._id
+			)
 		);
+		setFollowing(loggedInAccount.following.includes(profile._id));
+		console.log(loggedInAccount);
 	};
 
 	useEffect(() => {
@@ -53,7 +65,7 @@ function Profile() {
 	}, []);
 
 	useEffect(() => {
-		profileId && fetchContent();
+		profileId && loggedInAccount && fetchContent();
 	}, [profile]);
 
 	if (!loggedInAccount || !profile || !likedArray || !reviewArray) {
@@ -71,6 +83,26 @@ function Profile() {
 		}
 	};
 
+	const followUser = async () => {
+		try {
+			await client.follow(profile._id);
+			setFollowing(true);
+			// navigate("/login");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const unfollowUser = async () => {
+		try {
+			await client.unfollow(profile._id);
+			setFollowing(false);
+			// navigate("/login");
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	const myUserTabs = ["Liked", "Following"];
 	const myChefTabs = ["Liked", "Reviews", "Following", "Followers"];
 	const otherChefTabs = ["Liked", "Reviews", "Following"];
@@ -80,6 +112,12 @@ function Profile() {
 			? myChefTabs
 			: myUserTabs
 		: otherChefTabs;
+
+	const fetchUser = async (id) => {
+		const user = await client.findUserById(id);
+		// let username = (user.username)
+		return user;
+	};
 
 	function getTabContent() {
 		let tabToUse = tabsToUse[currentTab];
@@ -130,6 +168,7 @@ function Profile() {
 						<div key={followerID} className={`py-2 ${ind === 0 && "pt-0"}`}>
 							<hr className="w-full py-2" />
 							<span className="m-2 text-stone-600 hover:text-stone-400">@{followerID}</span>
+
 						</div>
 						</Link>
 					))}
@@ -161,12 +200,18 @@ function Profile() {
 				) : (
 					<div className="w-full flex wd-follow">
 						{/* if not already following */}
-						{loggedInAccount.following.includes(profile._id) ? (
-							<button className="wd-btn wd-btn-danger w-24">
+						{following ? (
+							<button
+								onClick={() => unfollowUser()}
+								className="wd-btn wd-btn-danger w-24">
 								Unfollow
 							</button>
 						) : (
-							<button className="wd-btn w-24">Follow</button>
+							<button
+								onClick={() => followUser()}
+								className="wd-btn w-24">
+								Follow
+							</button>
 						)}
 					</div>
 				)}
