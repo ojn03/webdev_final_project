@@ -14,8 +14,8 @@ function Profile() {
 	const [currentTab, setCurrentTab] = useState(0);
 
 	const myUserTabs = ["Liked", "Following"];
-	const myChefTabs = ["Endorsed", "Reviews", "Followers"];
-	const otherChefTabs = ["Endorsed", "Reviews"];
+	const myChefTabs = ["Liked", "Reviews", "Following", "Followers"];
+	const otherChefTabs = ["Liked", "Reviews", "Following"];
 
 	// fake liked IDs
 	const dummyLiked = [1, 2, 3, 4, 5, 6];
@@ -48,7 +48,7 @@ function Profile() {
 			return (
 				<div className="pb-2">
 					{dummyFollowing.map((username, ind) => (
-						<Link to={username}>
+						<Link to={`/profile/${username}`}>
 							<div
 								key={username}
 								className={`py-2 ${ind === 0 && "pt-0"}`}>
