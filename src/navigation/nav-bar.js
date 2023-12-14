@@ -1,14 +1,27 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../styles/global-styles.css";
 import { MdHomeFilled } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { FaUserCircle } from "react-icons/fa";
 import './nav.css';
+import * as client from "../client.js";
 
 function NavBar() {
 	// if not logged in, then replace profile with login
-	const links = ["home", "search", "profile"];
+	const [account, setAccount] = useState(null);
+
+	const fetchAccount = async () => {
+		const account = await client.account();
+		setAccount(account);
+	};
+
+	
+	useEffect(() => {
+		fetchAccount();
+	}, []);
+
+	const links = ["home", "search", (account ? "profile" : "login")];
 	const icons = [<MdHomeFilled />, <FiSearch />, <FaUserCircle />];
 	const { pathname } = useLocation();
 	console.log(pathname);
