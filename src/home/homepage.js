@@ -24,10 +24,10 @@ function Home() {
 	return (
 		<div className="w-full mx-auto !mb-6">
 			<h1 className="text-black">Home</h1>
-			{account && <>
+			{/* {account && <>
 				<LikedRecipeCard recipeId="" />
 				<RecipeReviewCard reviewId="" />
-			</>}
+			</>} */}
 			{/* TODO: get list of liked recipes andn reviews from followed chefs, order them from newst to oldest, then display them as either LikedRecipeCards or RecipeReviewCards */}
 		</div>
 	);

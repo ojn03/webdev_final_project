@@ -18,6 +18,17 @@ function LikedRecipeCard({ likeId }) {
 	const [reviews, setReviews] = useState(null);
 	const [likes, setLikes] = useState(null);
 
+	const fetchAll = async () => {
+		const tempLike = await client.findLikeById(likeId);
+		setLike(tempLike);
+		const tempRecipe = await fetchRecipeById(tempLike.recipeId);
+		setRecipe(tempRecipe);
+		const tempReviews = await client.findCommentsByRecipeId(tempRecipe.id);
+		setReviews(tempReviews);
+		const tempLikes = await client.findLikesByRecipeId(tempRecipe.id);
+		setLikes(tempLikes);
+	}
+
 	const fetchLike = async () => {
 		const like = await client.findLikeById(likeId);
 		setLike(like);
@@ -34,13 +45,7 @@ function LikedRecipeCard({ likeId }) {
 	};
 
 	useEffect(() => {
-		fetchLike();
-		fetchRecipeById(like.recipeId).then((recipe) => {
-			this.recipe = recipe;
-			setRecipe(recipe);
-		});
-		fetchLikes();
-		fetchReviews();
+		fetchAll();
 	}, []);
 
 	return (<>
