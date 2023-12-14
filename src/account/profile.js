@@ -9,6 +9,7 @@ import * as client from "../client.js";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
+
 	const navigate = useNavigate();
 	const [currentTab, setCurrentTab] = useState(0);
 	const [loggedInAccount, setLoggedInAccount] = useState(null);
@@ -20,6 +21,12 @@ function Profile() {
 	const fetchData = async () => {
 		try {
 			const account = await client.account();
+
+			if(!account && !profileId) {
+				navigate("/login");
+				return;
+			}
+
 			setLoggedInAccount(account);
 			setProfile(await client.findUserById(profileId || account._id));
 			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
@@ -163,5 +170,6 @@ function Profile() {
 			</div>
 		</div>
 	);
+
 }
 export default Profile;
