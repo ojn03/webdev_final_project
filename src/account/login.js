@@ -14,7 +14,7 @@ function Login() {
 			await client.signin({ username: username, password: password });
 			navigate("/profile");
 		} catch (error) {
-			if (error.data?.message === 'Invalid credentials') {
+			if (error.message === 'Request failed with status code 400') {
 				setError('Invalid username or password');
 			}
 			else {
