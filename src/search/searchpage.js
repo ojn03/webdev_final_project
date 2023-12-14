@@ -1,28 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/global-styles.css";
 import { fetchRecipe, fetchRecipeByQuery } from "./recipe-service";
 import { Button, Card } from "react-bootstrap";
 import RecipePreview from "./recipe_preview";
 import "./search-styles.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Search() {
+	const location = useLocation();
+	const navigate = useNavigate();
 	const [data, setData] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
-	const [prevSearchTerm, setPrevSearchTerm] = useState("");
+	const [prevSearchTerm, setPrevSearchTerm] = useState();
+
+	useEffect(() => {
+		const queryParams = new URLSearchParams(location.search);
+		const query = queryParams.get("query");
+		if (query) {
+			handleFetchRecipe(query);
+			setSearchTerm(query)
+		}
+		else {
+			setData([]);
+		}
+	}, [location.search]);
 
 	const handleInputChange = (e) => {
 		setSearchTerm(e.target.value);
 	};
 
-	const handleFetchRecipe = async () => {
+	const handleFetchRecipe = async (query) => {
 		try {
-			const result = await fetchRecipeByQuery(searchTerm); // Assuming you have a fetchRecipe function
-			console.log(result);
+			const result = await fetchRecipeByQuery(query); // Assuming you have a fetchRecipe function
 			setData(result || []);
-			setPrevSearchTerm(searchTerm);
+			setPrevSearchTerm(query);
 		} catch (error) {
 			console.error("Error fetching recipe:", error);
-			setPrevSearchTerm(searchTerm);
+			setPrevSearchTerm(query);
 		}
 	};
 
@@ -36,7 +50,7 @@ function Search() {
 				className="form-control mb-3 wd-input"
 			/>
 			<Button
-				onClick={handleFetchRecipe}
+				onClick={() => navigate(`/search?query=${searchTerm}`)}
 				variant="primary"
 				className="mb-3 wd-btn">
 				Fetch Recipe
@@ -49,7 +63,6 @@ function Search() {
 								hit.recipe.instructionLines &&
 								hit.recipe.instructionLines.length === 0
 							) {
-								console.log(hit.recipe.instructionLines);
 								return undefined;
 							}
 							return (
@@ -65,7 +78,7 @@ function Search() {
 					</div>
 				)}
 			</div>
-		</div>
+		</div >
 	);
 }
 
