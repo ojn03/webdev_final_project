@@ -6,8 +6,10 @@ import LikedRecipeCard from "../recipe-cards/liked-recipe";
 // import EndorsedRecipeCard from "../recipe-cards/endorsed-recipe";
 import RecipeReviewCard from "../recipe-cards/recipe-review";
 import * as client from "../client.js";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
+	const navigate = useNavigate();
 	const [currentTab, setCurrentTab] = useState(0);
 	const [loggedInAccount, setLoggedInAccount] = useState(null);
 	const [profile, setProfile] = useState(null);
@@ -44,6 +46,16 @@ function Profile() {
 	// console.log(reviewArray);
 
 	const ourAccount = !profileId || loggedInAccount?._id === profileId;
+
+	const handleLogOut = async () => {
+		try {
+			await client.signout();
+			navigate("/login")
+		}
+		catch (error) {
+			console.log(error);
+		}
+	}
 
 
 
@@ -135,7 +147,7 @@ function Profile() {
 					<Link to={`/${"profile/edit"}`}>
 						<button className="wd-btn ">Edit</button>
 					</Link>
-					<button className="wd-btn wd-btn-danger">Logout</button>
+					<button className="wd-btn wd-btn-danger" onClick={handleLogOut}>Logout</button>
 				</div> :
 					<div className="w-full flex wd-follow">
 						{/* if not already following */}
