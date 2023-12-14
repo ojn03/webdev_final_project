@@ -2,18 +2,116 @@ import axios from "axios";
 const request = axios.create({
 	withCredentials: true
 });
-export const BASE_API = process.env.REACT_APP_API_BASE;
+const BASE_API = process.env.REACT_APP_API_BASE;
+
+//likes
+const LIKES_API = `${BASE_API}/api/likes`;
+
+export const findAllLikes = async () => {
+	const response = await request.get(`${LIKES_API}`);
+	return response.data;
+};
+
+export const findLikeById = async (id) => {
+	const response = await request.get(`${LIKES_API}/${id}`);
+	return response.data;
+};
+export const findLikesByRecipeId = async (recipeId) => {
+	const response = await request.get(`${LIKES_API}/recipe/${recipeId}`);
+	return response.data;
+};
+export const findLikesByAuthorId = async (userId) => {
+	const response = await request.get(`${LIKES_API}/author/${userId}`);
+	return response.data;
+};
+
+export const createLike = async (like) => {
+	const response = await request.post(`${LIKES_API}`, like);
+	return response.data;
+};
+
+export const deleteLike = async (id) => {
+	const response = await request.delete(`${LIKES_API}/${id}`);
+	return response.data;
+};
+export const deleteLikeByRecipeId = async (recipeId) => {
+	const response = await request.delete(`${LIKES_API}/recipe/${recipeId}`);
+	return response.data;
+};
+export const deleteLikeByAuthorId = async (userId) => {
+	const response = await request.delete(`${LIKES_API}/author/${userId}`);
+	return response.data;
+};
+
+// comments
+const COMMENTS_API = `${BASE_API}/api/comments`;
+
+export const findAllComments = async () => {
+	const response = await request.get(`${COMMENTS_API}`);
+	return response.data;
+};
+
+export const findCommentById = async (id) => {
+	const response = await request.get(`${COMMENTS_API}/${id}`);
+	return response.data;
+};
+export const findCommentsByRecipeId = async (recipeId) => {
+	const response = await request.get(`${COMMENTS_API}/recipe/${recipeId}`);
+	return response.data;
+};
+export const findCommentsByAuthorId = async (userId) => {
+	const response = await request.get(`${COMMENTS_API}/author/${userId}`);
+	return response.data;
+};
+
+export const createComment = async (comment) => {
+	const response = await request.post(`${COMMENTS_API}`, comment);
+	return response.data;
+};
+
+export const updateComment = async (commentId, text) => {
+	const response = await request.put(`${COMMENTS_API}/${commentId}`, text);
+	return response.data;
+};
+
+export const deleteComment = async (recipeId) => {
+	const response = await request.delete(`${COMMENTS_API}/${recipeId}`);
+	return response.data;
+};
+
+export const deleteCommentByRecipeId = async (recipeId) => {
+	const response = await request.delete(`${COMMENTS_API}/recipe/${recipeId}`);
+	return response.data;
+};
+export const deleteCommentByAuthorId = async (userId) => {
+	const response = await request.delete(`${COMMENTS_API}/author/${userId}`);
+	return response.data;
+};
 
 // users
-export const USERS_API = `${BASE_API}/api/users`;
+const USERS_API = `${BASE_API}/api/users`;
 
-export const createUser = async (user) => {
-	const response = await request.post(`${USERS_API}`, user);
+export const createChef = async (user) => {
+	const response = await request.post(`${USERS_API}/chef`, user);
+	return response.data;
+};
+export const createBasicUser = async (user) => {
+	const response = await request.post(`${USERS_API}/basicUser`, user);
 	return response.data;
 };
 
 export const findAllUsers = async () => {
 	const response = await request.get(`${USERS_API}`);
+	return response.data;
+};
+
+export const findAllChefs = async () => {
+	const response = await request.get(`${USERS_API}/chefs`);
+	return response.data;
+};
+
+export const findAllBasicUsers = async () => {
+	const response = await request.get(`${USERS_API}/basicUsers`);
 	return response.data;
 };
 
@@ -56,74 +154,35 @@ export const unfollow = async (id) => {
 	const response = await request.post(`${USERS_API}/${id}/unfollow`);
 	return response.data;
 };
-export const likedRecipes = async (id) => {
-	const response = await request.get(`${USERS_API}/${id}/likedRecipes`);
-	return response.data;
-};
-export const addLikedRecipe = async (id, recipe) => {
-	const response = await request.post(
-		`${USERS_API}/${id}/likedRecipes`,
-		recipe
-	);
-	return response.data;
-};
-export const removeLikedRecipe = async (id, recipe) => {
-	const response = await request.delete(
-		`${USERS_API}/${id}/likedRecipes`,
-		recipe
-	);
-	return response.data;
-};
 
-export const followers = async (id) => {
+export const findFollowers = async (id) => {
 	const response = await request.get(`${USERS_API}/${id}/followers`);
 	return response.data;
 };
-export const following = async (id) => {
+export const findFollowing = async (id) => {
 	const response = await request.get(`${USERS_API}/${id}/following`);
 	return response.data;
 };
 
 // recipes
-const recipesbase = `${BASE_API}/api/recipes`;
+// const recipesbase = `${BASE_API}/api/recipes`;
 
-export const createRecipe = async (recipe) => {
-	const response = await request.post(`${recipesbase}`, recipe);
-	return response.data;
-};
+// export const createRecipe = async (recipe) => {
+// 	const response = await request.post(`${recipesbase}`, recipe);
+// 	return response.data;
+// };
 
-export const findAllRecipes = async () => {
-	const response = await request.get(`${recipesbase}`);
-	return response.data;
-};
+// export const findAllRecipes = async () => {
+// 	const response = await request.get(`${recipesbase}`);
+// 	return response.data;
+// };
 
-export const findRecipeById = async (id) => {
-	const response = await request.get(`${recipesbase}/${id}`);
-	return response.data;
-};
+// export const findRecipeById = async (id) => {
+// 	const response = await request.get(`${recipesbase}/${id}`);
+// 	return response.data;
+// };
 
-export const deleteRecipe = async (id) => {
-	const response = await request.delete(`${recipesbase}/${id}`);
-	return response.data;
-};
-
-export const findComments = async (id) => {
-	const recipe = await findRecipeById(id);
-	return recipe.comments;
-};
-
-export const deleteComment = async (recipeId, commentId) => {
-	const response = await request.delete(
-		`${recipesbase}/${recipeId}/comments/${commentId}`
-	);
-	return response.data;
-};
-
-export const addLike = async (recipeId) => {
-	const response = await request.post(`${recipesbase}/${recipeId}/likes`);
-	return response.data;
-};
-export const removeLike = async (recipeId) => {
-	const response = await request.delete(`${recipesbase}/${recipeId}/likes`);
-	return response.data;
-};
+// export const deleteRecipe = async (id) => {
+// 	const response = await request.delete(`${recipesbase}/${id}`);
+// 	return response.data;
+// };
