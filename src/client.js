@@ -146,6 +146,7 @@ export const signin = async (credentials) => {
 	if (response.status >= 400) {
 		// Check if the response has a data property
 		const responseData = response.data || {};
+		console.log("GOT HERE")
 
 		// Handle the error condition using both status code and response data
 		throw new Error(`Request failed with status ${response.status}. Response data: ${JSON.stringify(responseData)}`);
