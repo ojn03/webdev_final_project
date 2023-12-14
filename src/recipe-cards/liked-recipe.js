@@ -13,7 +13,6 @@ import { getRecipeIdFromUri } from "../search/recipe_preview.js";
 
 function LikedRecipeCard({ likeId }) {
 
-
 	const [like, setLike] = useState(null);
 	const [recipe, setRecipe] = useState(null);
 	const [reviews, setReviews] = useState(null);
@@ -51,7 +50,7 @@ function LikedRecipeCard({ likeId }) {
 	}, []);
 
 	return (<>
-		{like && recipe && reviews && likes && <Link to={`/ recipe / ${recipe.id}`}>
+		{like && recipe && reviews && likes && <Link to={`/recipe/${like.recipeId}`}>
 			<div className="container wd-card my-0 p-0">
 				<div
 					id="wd-card-title"

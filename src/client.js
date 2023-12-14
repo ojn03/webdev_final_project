@@ -30,8 +30,8 @@ export const createLike = async (like) => {
 	return response.data;
 };
 
-export const deleteLike = async (id) => {
-	const response = await request.delete(`${LIKES_API}/${id}`);
+export const deleteLike = async (like) => {
+	const response = await request.delete(`${LIKES_API}`,{data: like});
 	return response.data;
 };
 export const deleteLikeByRecipeId = async (recipeId) => {
