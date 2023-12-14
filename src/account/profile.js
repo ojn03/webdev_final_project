@@ -20,11 +20,13 @@ function Profile() {
 	const fetchData = async () => {
 		try {
 			const account = await client.account();
+			if (!account) {
+				navigate("/login");
+				return;
+			}
 			setLoggedInAccount(account);
 			setProfile(await client.findUserById(profileId || account._id));
-
 			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
-
 			setReviewArray(await client.findCommentsByAuthorId(profileId || account._id));
 		}
 		catch (error) {
@@ -40,10 +42,6 @@ function Profile() {
 		return <div>Loading...</div>;
 	}
 
-	// console.log(profile);
-	console.log(likedArray.length);
-	console.log(likedArray);
-	// console.log(reviewArray);
 
 	const ourAccount = !profileId || loggedInAccount?._id === profileId;
 
@@ -85,7 +83,8 @@ function Profile() {
 					{likedArray.map((like) => (
 						<div key={like.recipeId}>
 							<hr className="w-full" />
-							<LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} />
+							<LikedRecipeCard likeId={like._id} />
+							{/* <LikedRecipeCard recipeId={like.recipeId} likedDate={like.createdAt} /> */}
 						</div>
 					))}
 				</div>
