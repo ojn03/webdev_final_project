@@ -125,15 +125,13 @@ function Profile() {
 		} else if (tabToUse === "Followers") {
 			return (
 				<div className="pb-2">
-					{profile.followers?.map((username, ind) => (
-						<div
-							key={username}
-							className={`py-2 ${ind === 0 && "pt-0"}`}>
+					{profile.followers?.map((followerID, ind) => (
+						<Link to={`/profile/${followerID}`}>
+						<div key={followerID} className={`py-2 ${ind === 0 && "pt-0"}`}>
 							<hr className="w-full py-2" />
-							<span className="m-2 text-stone-600">
-								@{username}
-							</span>
+							<span className="m-2 text-stone-600 hover:text-stone-400">@{followerID}</span>
 						</div>
+						</Link>
 					))}
 				</div>
 			);
