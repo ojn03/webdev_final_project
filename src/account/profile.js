@@ -20,10 +20,6 @@ function Profile() {
 	const fetchData = async () => {
 		try {
 			const account = await client.account();
-			if (!account) {
-				navigate("/login");
-				return;
-			}
 			setLoggedInAccount(account);
 			setProfile(await client.findUserById(profileId || account._id));
 			setLikedArray(await client.findLikesByAuthorId(profileId || account._id));
