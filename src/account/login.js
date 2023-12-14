@@ -22,6 +22,11 @@ function Login() {
 		<div className={"flex w-full justify-center"}>
 			<div className="flex flex-col">
 				<h1 className="wd-title mt-6 self-center">Sign In</h1>
+				{error && (
+					<span className="text-red-500 text-sm self-center">
+						{error}
+					</span>
+				)}
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					Username
 				</span>

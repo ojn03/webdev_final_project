@@ -127,3 +127,33 @@ export const removeLike = async (recipeId) => {
 	const response = await request.delete(`${recipesbase}/${recipeId}/likes`);
 	return response.data;
 };
+
+export const fetchLikeById = async (id) => {
+	const response = await axios.get(`${BASE_API}/likes/${id}`);
+	return response.data;
+};
+
+export const findLikes = async (userId) => {
+	const response = await axios.get(`${USERS_API}/${userId}/likes`);
+	return response.data;
+};
+
+export const fetchReviewById = async (id) => {
+	const response = await axios.get(`${BASE_API}/reviews/${id}`);
+	return response.data;
+};
+
+export const addReview = async (reviewData) => {
+	const response = await axios.post(`${BASE_API}/reviews`, reviewData);
+	return response.data;
+};
+
+export const fetchRecipeById = async (id) => {
+	const response = await axios.get(`${BASE_API}/recipes/${id}`);
+	return response.data;
+};
+
+export const findLikesForRecipe = async (recipeId) => {
+	const response = await axios.get(`${BASE_API}/recipes/${recipeId}/likes`);
+	return response.data;
+};

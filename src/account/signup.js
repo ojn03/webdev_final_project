@@ -7,32 +7,32 @@ import { useNavigate } from "react-router";
 
 
 function Signup() {
-	const [name, setName] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [error, setError] = useState("");
-	const [email, setEmail] = useState("");
 	const [isChef, setIsChef] = useState(false);
 	const navigate = useNavigate();
 
-	const signUp = async () => {
+	const handleClick = async () => {
 		try {
 			if (password !== passwordConfirm) {
 				setError("Passwords do not match");
 				return;
 			}
 			const userObject = {
-				name: name,
+				first: firstName,
+				last: lastName,
 				username: username,
 				password: password,
-				email: email,
-				isChef: isChef
+				type: isChef ? "chef" : "basic"
 			}
-			const currentUser = await client.signUp(userObject);
-			navigate("/signin");
+			const currentUser = await client.signup(userObject);
+			navigate("/profile");
 		} catch (error) {
-			setError(error)
+			setError(error.toString())
 		}
 	};
 
@@ -46,13 +46,21 @@ function Signup() {
 					</span>
 				)}
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
-					Full Name
+					First Name
 				</span>
 				<input
 					type={"text"}
-					placeholder="Full Name"
+					placeholder="First Name"
 					className="wd-input-small m-2"
-					onChange={(e) => setName(e.target.value)}></input>
+					onChange={(e) => setFirstName(e.target.value)}></input>
+				<span className="ml-1 wd-sub-sub-title text-stone-700">
+					Last Name
+				</span>
+				<input
+					type={"text"}
+					placeholder="Last Name"
+					className="wd-input-small m-2"
+					onChange={(e) => setLastName(e.target.value)}></input>
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					Username
 				</span>
@@ -61,14 +69,6 @@ function Signup() {
 					placeholder="Username"
 					className="wd-input-small m-2"
 					onChange={(e) => setUsername(e.target.value)}></input>
-				<span className="ml-1 wd-sub-sub-title text-stone-700">
-					Email Address
-				</span>
-				<input
-					type={"email"}
-					placeholder="Email Address"
-					className="wd-input-small m-2"
-					onChange={(e) => setEmail(e.target.value)}></input>
 				<span className="ml-1 wd-sub-sub-title text-stone-700">
 					Password
 				</span>
@@ -99,7 +99,7 @@ function Signup() {
 				{/* if successful, route to profile. Otherwise, stay on some page */}
 				<button
 					className="wd-btn wd-btn-success w-60 self-center"
-					onClick={() => signUp()}>
+					onClick={handleClick}>
 					Sign Up
 				</button>
 
