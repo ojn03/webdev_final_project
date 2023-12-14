@@ -47,9 +47,10 @@ function ReviewNoRecipeCard({ reviewId }) {
 				</Link>
 				<br />
 
-				<span className="float-right text-xs italic text-stone-500 ">
+				<span className="float-left text-xs italic text-stone-500 ">
 					Posted {dateTime}
 				</span>
+				<br />
 				<p>{review.text}</p>
 			</div>
 		</div>

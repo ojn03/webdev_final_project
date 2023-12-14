@@ -10,11 +10,13 @@ import * as client from "../client.js";
 function NavBar() {
 	// if not logged in, then replace profile with login
 	const [account, setAccount] = useState(null);
+	const [profileLink, setProfileLink] = useState("login")
 
 	const fetchAccount = async () => {
 		try {
 			const account = await client.account();
 			setAccount(account);
+			setProfileLink("profile");
 		}
 		catch (error) {
 			console.log(error);
@@ -26,7 +28,8 @@ function NavBar() {
 		fetchAccount();
 	}, []);
 
-	const links = ["home", "search", "profile"];
+
+	const links = ["home", "search", profileLink];
 	const icons = [<MdHomeFilled />, <FiSearch />, <FaUserCircle />];
 	const { pathname } = useLocation();
 
