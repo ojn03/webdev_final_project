@@ -10,8 +10,8 @@ import {
 import * as client from "../client.js";
 import { fetchRecipeById } from "../search/recipe-service";
 
-function LikedRecipeCard({likeId}) {
-	
+function LikedRecipeCard({ likeId }) {
+
 
 	const [like, setLike] = useState(null);
 	const [recipe, setRecipe] = useState(null);
@@ -19,20 +19,20 @@ function LikedRecipeCard({likeId}) {
 	const [likes, setLikes] = useState(null);
 
 	const fetchLike = async () => {
-		const like = await client.fetchLikeById(likeId);
+		const like = await client.findLikeById(likeId);
 		setLike(like);
-	}; 
+	};
 
 	const fetchLikes = async () => {
-		const likes = await client.findLikes(recipe.id);
+		const likes = await client.findLikesByRecipeId(recipe.id);
 		setLikes(likes);
 	};
 
 	const fetchReviews = async () => {
-		const reviews = await client.findComments(recipe.id);
+		const reviews = await client.findCommentsByRecipeId(recipe.id);
 		setReviews(reviews);
 	};
- 
+
 	useEffect(() => {
 		fetchLike();
 		fetchRecipeById(like.recipeId).then((recipe) => {
@@ -61,7 +61,7 @@ function LikedRecipeCard({likeId}) {
 						<span className="wd-inline-stats">
 							<FaRegHeart /> <p>{likes ? likes.length : 0} likes</p>
 						</span>
-						
+
 						<span className="wd-inline-stats">
 							<FaRegComment /> <p>{reviews ? reviews.length : 0} reviews</p>
 						</span>
@@ -69,8 +69,8 @@ function LikedRecipeCard({likeId}) {
 				</div>
 				<div
 					className="m-0 p-0 wd-img-container"
-					>
-					<img  src={recipe.image} alt={recipe.label}></img>
+				>
+					<img src={recipe.image} alt={recipe.label}></img>
 				</div>
 			</div>
 		</Link>

@@ -38,12 +38,12 @@ function Recipe() {
 	};
 
 	const fetchLikes = async () => {
-		const likes = await client.findLikes(recipeId);
+		const likes = await client.findLikesByRecipeId(recipeId);
 		setLikes(likes);
 	};
 
 	const fetchReviews = async () => {
-		const reviews = await client.findComments(recipeId);
+		const reviews = await client.findCommentsByRecipeId(recipeId);
 		setReviews(reviews);
 	};
 
@@ -53,9 +53,9 @@ function Recipe() {
 		if (!signedin) {
 			setSigninPopup(true);
 		} else {
-			await client.addLike();
+			await client.createLike({ authorId: account.id, recipeId: recipeId });
 			setLiked(!liked);
-			let likes = await client.findLikes(recipeId);
+			let likes = await client.findLikesByRecipeId(recipeId);
 			setLikes(likes);
 		}
 	};

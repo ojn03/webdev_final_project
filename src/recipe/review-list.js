@@ -16,13 +16,13 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 	};
 
 	const fetchReviews = async () => {
-		const reviews = await client.findComments(recipeId);
+		const reviews = await client.findCommentsByRecipeId(recipeId);
 		setReviews(reviews);
 	};
 
 	const addReview = async () => {
 		// add a new review using the current user logged in and the value of currReview
-		await client.addReview(account.id, recipeId, currReview);
+		await client.createComment({ text: currReview, authorId: account.id, recipeId: recipeId });
 		document.getElementById("enter-review-box").value = "";
 		setCurrReview("");
 		fetchReviews();
@@ -62,7 +62,7 @@ function RecipeReviewList({ recipeId, closeFunc }) {
 					{/* end chef-only area */}
 
 					{/* map through reviews */}
-					{reviews.map((review) => <ReviewNoRecipeCard reviewId={review.id} key={review.id}/>)}
+					{reviews.map((review) => <ReviewNoRecipeCard reviewId={review.id} key={review.id} />)}
 				</div>
 			</div>
 		</div>

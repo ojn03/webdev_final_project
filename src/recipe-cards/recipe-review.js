@@ -7,16 +7,16 @@ import * as client from "../client.js";
 import { fetchRecipeById } from "../search/recipe-service";
 
 
-function RecipeReviewCard({reviewId}) {
-	
+function RecipeReviewCard({ reviewId }) {
+
 	const [review, setReview] = useState(null);
 	const [recipe, setRecipe] = useState(null);
 
 	const fetchReview = async () => {
-		const review = await client.fetchReviewById(reviewId);
+		const review = await client.findCommentById(reviewId);
 		setReview(review);
-	}; 
- 
+	};
+
 
 	useEffect(() => {
 		fetchReview();
@@ -29,10 +29,10 @@ function RecipeReviewCard({reviewId}) {
 	return (
 		<div className="container wd-recipe-card my-0 p-0">
 			<div className="p-6 ">
-				<Link  to={`/profile/${review.user.username}`}><span className="inline-block wd-user-icon pb-3">
+				<Link to={`/profile/${review.user.username}`}><span className="inline-block wd-user-icon pb-3">
 					<FaUserCircle /> @{review.user.username}
 				</span> </Link>
-                <span className="float-right text-xs italic text-stone-500 ">Posted {review.created}</span>
+				<span className="float-right text-xs italic text-stone-500 ">Posted {review.created}</span>
 				<p>{review.text}</p>
 			</div>
 			<Link to={`/recipe/${recipe.id}`}>
