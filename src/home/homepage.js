@@ -7,7 +7,9 @@ import * as client from "../client.js";
 
 function Home() {
 	const [account, setAccount] = useState(null);
-
+	const [following, setFollowing] = useState(null);
+	const [allReviews, setAllReviews] = useState(null);
+	// const [followers, setFollowers] = useState(null);
 	const [reviews, setReviews] = useState(null);
 	const [likes, setLikes] = useState(null);
 
@@ -20,30 +22,41 @@ function Home() {
 		}
 	};
 
+	const fetchAllFollowing = async () => {
+		const following = await client.findFollowing(account._id);
+		// following.map((user) => user._id)
+		setFollowing(following);
+	};
+
+	const arrayHasId = (array, id) => {
+		let results = array.filter((elm) => elm._id === id);
+		return results.length > 0;
+	}
+
+
 	const fetchAllReviews = async () => {
 		try {
-			const following = await client.findFollowing(account._id);
-			let reviews = [];
-			following.forEach((user) => {
-				reviews.push(fetchReviewsFromUser(user));
-			});
-			reviews.sort((a, b) => {
+			
+			let ids = following.map((elm) => elm._id);
+			let rev3 = allReviews.filter((rev) => (ids.includes(rev.authorId)));
+			rev3.sort((a, b) => {
 				return new Date(b.createdAt) - new Date(a.createdAt);
 			});
-			setReviews(reviews);
+			setReviews(rev3);
 		} catch (error) {
 			console.log(error);
 		}
 	};
 
-	const fetchReviewsFromUser = async (user) => {
+	const fetchAllComments = async () => {
 		try {
-			const reviews = await client.findCommentsByRecipeId(user._id);
-			return reviews;
+			let allReviews = await client.findAllComments();
+			setAllReviews(allReviews);
 		} catch (error) {
 			console.log(error);
 		}
-	};
+	}
+
 
 	const fetchAllLikes = async () => {
 		try {
@@ -73,14 +86,26 @@ function Home() {
 	}, []);
 
 	useEffect(() => {
-		account ? fetchAllReviews() : fetchAllLikes();
+		account ? fetchAllComments() : fetchAllLikes();
 	}, [account]);
+
+	useEffect(() => {
+		// console.log("hi")
+		if(account && !following) {
+			fetchAllFollowing();
+		} else {
+			(account && allReviews) && fetchAllReviews();
+		}
+		
+	}, [allReviews, following]);
 
 	return (
 		<div className="w-full mx-auto !mb-6">
 			<h1 className="text-black wd-title ml-5 mt-3">Home</h1>
 			{account
-				? reviews?.map((review) => <RecipeReviewCard reviewId={review._id} />)
+				? reviews?.map((review) => (
+						<RecipeReviewCard reviewId={review._id} />
+				  ))
 				: likes?.map((like) => <RecipeCard recipeId={like} />)}
 		</div>
 	);
